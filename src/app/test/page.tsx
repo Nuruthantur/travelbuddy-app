@@ -1,3 +1,7 @@
+import LoginFormTest from "@/components/LoginFormTest";
+import TestComponentCC from "@/components/testComponentCC";
+
+import UserCardSC from "@/components/userCardSC";
 import UsersSC from "@/components/usersSC";
 import TestComponent from "../../components/testComponentCC";
 
@@ -6,7 +10,9 @@ export default function TestPage() {
     <div>
       <h1>this is the testing page</h1>
       <UsersSC />
-      {/* <TestComponent /> */}
+      {/* <TestComponentCC /> */}
+      {/* <LoginFormTest /> */}
+      {/* <UserCardSC /> */}
     </div>
   );
 }
