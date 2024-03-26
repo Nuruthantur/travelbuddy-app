@@ -22,7 +22,16 @@ export interface User {
   userName: string;
   email: string;
   password: string;
-  favDestinations?: string;
+  firstName: string;
+  lastName: string;
+  birthDate: string;
+  // city: "",
+  // state: "",
+  aboutYourself: string;
+  travelingDates: string;
+  travelingDestinations: string;
+  agreeToTerms: boolean;
+  // favDestinations?: string;
 }
 
 export interface TestUser {

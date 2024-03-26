@@ -2,9 +2,16 @@ import mongoose from "mongoose";
 
 const userSchema = new mongoose.Schema(
   {
+    userName: { type: String, required: true, unique: true },
     email: { type: String, required: true, unique: true },
     password: { type: String, required: true },
-    userName: { type: String, required: true },
+    firstName: { type: String, required: false },
+    lastName: { type: String, required: false },
+    birthDate: { type: Date, required: false },
+    aboutYourself: { type: String, required: false },
+    travelingDates: { type: String, required: false },
+    travelingDestinations: { type: String, required: false },
+    hobbies: { type: String, required: false },
   },
   { timestamps: true }
 );

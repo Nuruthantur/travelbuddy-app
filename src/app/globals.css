@@ -54,7 +54,8 @@ h3 {
   -webkit-text-stroke: 1px black;
   color: black;
 }
-.ButtonGetStarted {
+
+.buttonGetStarted {
   margin-top: 30px;
   font-weight: bold !important;
   width: 70% !important;
@@ -68,6 +69,65 @@ img {
   animation-iteration-count: infinite;
   animation-timing-function: linear;
   /* border-radius: 50%; */
+}
+
+
+
+.step_container {
+  display: flex;
+  justify-content: space-between;
+  position: relative; /* Set position to relative */
+}
+
+.step {
+  width: 34px;
+  height: 34px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 2px solid white;
+  border-radius: 50%;
+  background-color: white;
+  color: black;
+  font-weight: bold;
+  position: relative;
+}
+
+/* Add a line between each step */
+.step::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 46px;
+  height: 2px;
+  background-color: rgb(255, 255, 255);
+  z-index: -1;
+  right: calc(-46px - 2px);
+}
+
+.step_container .step:last-child::after {
+  display: none;
+}
+
+.active_step {
+  background-color: rgb(109, 109, 180);
+  color: white;
+  border: 5px solid rgb(148, 148, 206);
+  width: 34px;
+  height: 34px;
+}
+
+.step.active_step::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 46px;
+  height: 2px;
+  background-color: rgb(148, 148, 206);
+  z-index: -1;
+  right: calc(-46px - 2px);
 }
 
 @keyframes rotate {

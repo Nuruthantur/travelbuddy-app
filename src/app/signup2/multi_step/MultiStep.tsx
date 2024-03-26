@@ -5,32 +5,40 @@ import StepA from "./StepA";
 import StepB from "./StepB";
 import StepC from "./StepC";
 import StepD from "./StepD";
+import { User } from "@/@types/User";
 
 const initialFormData = {
   firstName: "",
   lastName: "",
-  username: "",
+  userName: "",
   birthDate: "",
   // city: "",
   // state: "",
   aboutYourself: "",
   travelingDates: "",
   travelingDestinations: "",
+  hobbies: "",
   email: "",
   password: "",
   agreeToTerms: false,
 };
 
-// interface MultiStepType {
-//   user: User | null;
-// }
-// const defaultValue: MultiStepType = {
-//   user: null,
-// };
+interface MultiStepType {
+  user: User | null;
+}
+const defaultValue: MultiStepType = {
+  user: null,
+};
 
 const stepsArray = ["1", "2", "3", "4"];
 
-const MultiStep = ({ showStepNumber }: { showStepNumber: boolean }) => {
+const MultiStep = ({
+  showStepNumber,
+  handleSubmit,
+}: {
+  showStepNumber: boolean;
+  handleSubmit: any;
+}) => {
   const [step, setStep] = useState("1");
   const [formData, setFormData] = useState(initialFormData);
   // const [user, setUser] = (useState < User) | null(null);
@@ -64,21 +72,22 @@ const MultiStep = ({ showStepNumber }: { showStepNumber: boolean }) => {
     if (!formData.agreeToTerms) {
       alert("You must agree to the terms and conditions");
     } else {
-      console.log(formData);
+      handleSubmit(formData);
     }
   };
 
   const renderTopStepNumbers = () => {
-    if (!showStepNumber || step === "4") {
+    if (!showStepNumber) {
       return null;
     }
+
     return (
-      <div className="m-2 mb-4 flex justify-between">
+      <div className="step_container m-6 mb-4 flex justify-between">
         {stepsArray.map((item) => (
           <div
             key={item}
-            className={`w-8 h-8 flex justify-center items-center border-2 rounded-full ${
-              item === step ? "bg-blue-500" : ""
+            className={`step w-8 h-8 flex justify-center bg-white text-base font-bold text-black items-center border-2 rounded-full ${
+              parseInt(item) <= parseInt(step) ? "active_step" : ""
             }`}
             onClick={() => setStep(item)}
           >
@@ -90,11 +99,11 @@ const MultiStep = ({ showStepNumber }: { showStepNumber: boolean }) => {
   };
 
   useEffect(() => {
-    console.log(formData);
+    // console.log(formData);
   }, [formData]);
 
   return (
-    <div>
+    <div className="mt-6">
       {renderTopStepNumbers()}
 
       {step === "1" ? (
