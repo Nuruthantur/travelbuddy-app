@@ -1,7 +1,7 @@
-import dbConnect from "@/lib/connectDB";
-import UserModel from "@/models/users";
+import dbConnect from "@/utils/dbConnect";
 import { myContext } from "./route";
 import { GraphQLError } from "graphql";
+import UserModel from "@/models/User";
 
 type param = {
   input: {

@@ -1,10 +1,10 @@
 import NextAuth from "next-auth";
 import { Account, User as AuthUser } from "next-auth";
-import GoogleProvider from "next-auth/providers/google";
+import GoogleProvider, { GoogleProfile } from "next-auth/providers/google";
 import CredentialsProvider from "next-auth/providers/credentials";
 import bcrypt from "bcryptjs";
 import UserModel from "@/models/User";
-import connect from "@/utils/db";
+import dbConnect from "@/utils/dbConnect";
 
 export const authOptions: any = {
   providers: [
@@ -17,7 +17,7 @@ export const authOptions: any = {
         password: { label: "password", type: "password" },
       },
       async authorize(credentials: any) {
-        await connect();
+        await dbConnect();
 
         try {
           const user = await UserModel.findOne({ email: credentials.email });
@@ -43,17 +43,28 @@ export const authOptions: any = {
     }),
   ],
   callbacks: {
-    async signIn({ user, account }: { user: AuthUser; account: Account }) {
+    async signIn({
+      user,
+      account,
+      profile,
+    }: {
+      user: AuthUser;
+      account: Account;
+      profile: GoogleProfile;
+    }) {
+      console.log("profile :>> ", profile);
       if (account?.provider == "credentials") {
         return true; //return true after the completion of the signup process.
       }
       if (account?.provider == "google") {
-        await connect(); //connecting to the database
+        await dbConnect(); //connecting to the database
         try {
           const existingUser = await UserModel.findOne({ email: user.email });
           if (!existingUser) {
             const newUser = new UserModel({
               email: user.email,
+              authType: "google",
+              userName: user.name,
             });
 
             await newUser.save();

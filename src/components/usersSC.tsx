@@ -1,7 +1,7 @@
 import { User } from "@/@types/User";
-import dbConnect from "@/lib/connectDB";
-import UserModel from "@/models/users";
+import dbConnect from "@/utils/dbConnect";
 import React from "react";
+import UserModel from "@/models/User";
 
 type Props = {};
 

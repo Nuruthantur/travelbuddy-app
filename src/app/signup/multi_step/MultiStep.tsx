@@ -7,7 +7,21 @@ import StepC from "./StepC";
 import StepD from "./StepD";
 import { User } from "@/@types/User";
 
-const initialFormData = {
+export interface newUserValues {
+  userName: string;
+  email: string;
+  password: string;
+  firstName: string;
+  lastName: string;
+  birthDate: string;
+  aboutYourself: string;
+  hobbies: string;
+  travelingDates: string;
+  travelingDestinations: string;
+  agreeToTerms: boolean;
+}
+
+const initialFormData:newUserValues = {
   firstName: "",
   lastName: "",
   userName: "",

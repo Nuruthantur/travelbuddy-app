@@ -1,5 +1,5 @@
 import Image from "next/image";
-import image from "../img/klipartz_cut.png";
+import image from "../img/background.png";
 
 export default function Home() {
   return (

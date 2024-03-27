@@ -3,8 +3,9 @@ import mongoose from "mongoose";
 const userSchema = new mongoose.Schema(
   {
     userName: { type: String, required: true, unique: true },
+    authType: { type: String, required: true, enum: ["credentials", "google"] },
     email: { type: String, required: true, unique: true },
-    password: { type: String, required: true },
+    password: { type: String, required: false },
     firstName: { type: String, required: false },
     lastName: { type: String, required: false },
     birthDate: { type: Date, required: false },

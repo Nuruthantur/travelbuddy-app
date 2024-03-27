@@ -11,7 +11,7 @@ function StepA({
 }) {
   return (
     <div>
-      <h1 className="m-2 pt-4 text-xl font-bold text-blue-900 text-center">
+      <h1 className="m-2 pt-4 text-xl font-bold text-white font-outline-4 text-center">
         SIGNUP INFO
       </h1>
       <div className="m-2 mt-4 text-black text-lg">
@@ -44,6 +44,12 @@ function StepA({
         />
       </div>
       <div className="my-2 mt-6 flex justify-end btn-xs text-lg font-bold items-center">
+        <button
+          className="bg-indigo-400 px-4 py-2 rounded-xl "
+          onClick={handleNextStep}
+        >
+          Next
+        </button>
         <button
           className="bg-indigo-400 px-4 py-2 rounded-xl "
           onClick={handleNextStep}

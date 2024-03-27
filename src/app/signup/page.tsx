@@ -1,10 +1,14 @@
 "use client";
-import { useSession } from "next-auth/react";
-import Link from "next/link";
-import { useRouter } from "next/navigation";
-import React, { useEffect, useState } from "react";
 
-const Signup = () => {
+import Image from "next/image";
+import image from "../../img/background.png";
+import MultiStep, { newUserValues } from "./multi_step/MultiStep";
+import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
+import { useSession } from "next-auth/react";
+import React from "react";
+
+export default function Signup() {
   const [error, setError] = useState("");
   const router = useRouter();
   const { data: session, status: sessionStatus } = useSession();
@@ -19,38 +23,31 @@ const Signup = () => {
     const emailRegex = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i;
     return emailRegex.test(email);
   };
-  const handleSubmit = async (e: any) => {
-    e.preventDefault();
-    const email = e.target[0].value;
-    const password = e.target[1].value;
-    const userName = e.target[2].value;
 
-    if (!isValidEmail(email)) {
+  const handleSubmit = async (formData: newUserValues) => {
+    if (!isValidEmail(formData.email)) {
       setError("Email is invalid");
       return;
     }
 
-    if (!password || password.length < 5) {
+    if (!formData.password || formData.password.length < 5) {
       setError("Password is invalid");
       return;
     }
 
-    if (userName === "") {
+    if (formData.userName === "") {
       return;
     }
-
+    console.log("formData2 :>> ", formData);
     try {
       const res = await fetch("/api/signup", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({
-          email,
-          password,
-          userName,
-        }),
+        body: JSON.stringify(formData),
       });
+      console.log("res :>> ", res);
       if (res.status === 400) {
         setError("This email is alread registered");
       }
@@ -69,47 +66,25 @@ const Signup = () => {
   }
   return (
     sessionStatus !== "authenticated" && (
-      <div className="flex min-h-screen flex-col items-center justify-between p-24">
-        <div className="bg-[#212121] p-8 rounded shadow-md w-96">
-          <h1 className="text-4xl text-center font-normal mb-8">Signup</h1>
-          <form onSubmit={handleSubmit}>
-            <input
-              type="text"
-              className="w-full border border-gray-300 text-black rounded px-3 py-2 mb-4 focus:outline-none focus:border-blue-400 focus:text-black"
-              placeholder="Email"
-              required
-            />
-            <input
-              type="password"
-              className="w-full border border-gray-300 text-black rounded px-3 py-2 mb-4 focus:outline-none focus:border-blue-400 focus:text-black"
-              placeholder="Password"
-              required
-            />
-
-            <input
-              type="text"
-              className="w-full border border-gray-300 text-black rounded px-3 py-2 mb-4 focus:outline-none focus:border-blue-400 focus:text-black"
-              placeholder="Username"
-              required
-            />
-            <button
-              type="submit"
-              className="w-full bg-blue-500 text-white py-2 rounded hover:bg-blue-600"
-            >
-              Signup
-            </button>
-            <p className="text-red-600 text-[16px] mb-4">{error && error}</p>
-          </form>
-          <Link
-            href="/login"
-            className="block text-center text-blue-400 hover:underline mt-2"
-          >
-            Login with an existing account
-          </Link>
+      <>
+        <div className="flex items-center">
+          <Image src={image} alt="travel" style={{ marginTop: "30px" }} />
         </div>
-      </div>
+        <div className="main_h1 flex justify-center">
+          <h1
+            style={{
+              fontSize: "50px",
+              marginTop: "-40px",
+              color: "white",
+            }}
+          >
+            Travel Buddy
+          </h1>
+        </div>
+        <div className="flex text-white min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
+          <MultiStep showStepNumber={true} handleSubmit={handleSubmit} />
+        </div>
+      </>
     )
   );
-};
-
-export default Signup;
+}
