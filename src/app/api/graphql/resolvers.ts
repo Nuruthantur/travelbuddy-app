@@ -1,8 +1,10 @@
 import dbConnect from "@/utils/dbConnect";
-import { myContext } from "./route";
+import UserModel from "@/models/User";
+import { MyContext } from "./route";
 import { GraphQLError } from "graphql";
 import UserModel from "@/models/User";
 
+//TODO - write a query that gives back the session of the user as getMe()
 type param = {
   input: {
     email: string;
@@ -25,6 +27,21 @@ type updateUserInformation = {
   firstName: string;
   lastName: string;
   homeTown: string;
+// type updateUser = {
+//   firstName?: string;
+//   lastName?: string;
+//   birthDate?: Date;
+//   hometown?: string;
+//   travelDates?: Date;
+//   favDestinations?: string;
+// };
+type updateUserInformation = {
+  id: string;
+  userName: string;
+  email: string;
+  firstName: string;
+  lastName: string;
+  homeTown: string;
 };
 type updateUserTravelDates = {
   travelDates?: string;
@@ -32,7 +49,7 @@ type updateUserTravelDates = {
 
 const resolvers = {
   Query: {
-    users: async () => {
+    getAllUsers: async () => {
       try {
         await dbConnect();
         const users = await UserModel.find({});
@@ -40,6 +57,28 @@ const resolvers = {
       } catch (error) {
         console.log(error);
       }
+    },
+    users: async (parent: any, args: any, contextValue: MyContext) => {
+      await dbConnect();
+      // if (!contextValue.session || !contextValue.session.roles.includes('admin')) return null;
+      // return contextValue.models.User.getAll();
+    },
+    getUsersById: async () => {},
+    testFunction: async (_: any, args: any, context: any) => {
+      console.log(context);
+      const { session } = context;
+      console.log(session);
+      session.something = "hello";
+      return session.something;
+    },
+    getMe: async (_: any, args: param, context: MyContext) => {
+      await dbConnect();
+      if (!context.session) return null;
+      console.log("this is the context session: ", context.session);
+      // throw new Error("Not authenticated")
+      // else return context.session.user;
+      // const user = await UserModel.findById({});
+      // return user;
     },
     // find one user by id
     user: async (parent: any, args: param) => {
@@ -53,24 +92,14 @@ const resolvers = {
     },
   },
   Mutation: {
-    createUser: async (_: undefined, params: param) => {
-      console.log(params);
-      try {
-        await dbConnect();
-        const user = await UserModel.create(params.input);
-        return user;
-      } catch (error) {
-        console.log(error);
-      }
-    },
-    updateUsersEmail: async (
+    updateUserInformation: async (
       _: undefined,
-      params: { id: string; email: string },
-      contextValue: myContext
+      params: updateUserInformation,
+      contextValue: MyContext
     ) => {
       try {
         if (!contextValue.session) {
-          return new GraphQLError("User is not authenticated", {
+          return new GraphQLError("User is not authenticated to do that", {
             extensions: {
               code: "UNAUTHENTICATED",
               http: { status: 401 },
@@ -81,11 +110,16 @@ const resolvers = {
         const updatedUser = await UserModel.findByIdAndUpdate(
           // TODO - do this with the token and not the id (or get the session of a user from next auth)
           params.id,
-          { email: params.email },
+          {
+            email: params.email,
+            firstName: params.firstName,
+            lastName: params.lastName,
+          },
           { new: true }
         );
         return updatedUser;
-        // return { message: "Email updated" };
+        // if you want to check with message also change in the typeDefs to message instead of :User
+        // return { message: "User Information updated" };
       } catch (error) {
         console.log(error);
       }
@@ -118,7 +152,6 @@ const resolvers = {
       }
     },
     signup: async (_: undefined, params: param) => {
-      // TODO: implement JWT and add token / add sessions of user?
       console.log(params);
       try {
         const userAlreadyExists = await UserModel.findOne({
@@ -130,16 +163,6 @@ const resolvers = {
         await dbConnect();
         const newUser = await UserModel.create(params.input);
         return newUser;
-      } catch (error) {
-        console.log(error);
-      }
-    },
-    completeUserSignup: async (_: undefined, params: updateUser) => {
-      console.log(params);
-      try {
-        await dbConnect();
-        const user = await UserModel.updateOne(params);
-        return user;
       } catch (error) {
         console.log(error);
       }
