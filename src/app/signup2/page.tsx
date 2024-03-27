@@ -1,5 +1,6 @@
 "use client";
 import { User } from "@/@types/User";
+import ImageInput from "@/components/imageinput";
 import getBase64 from "@/utils/imagetobase64";
 import { signIn, useSession } from "next-auth/react";
 import Link from "next/link";
@@ -14,21 +15,6 @@ const Signup = () => {
   const router = useRouter();
   const { data: session, status: sessionStatus } = useSession();
 
-  const handleFileSelect = async (e: ChangeEvent<HTMLInputElement>) => {
-    e.preventDefault();
-    console.log("e target", e.target.files?.[0]);
-    const file = e.target.files?.[0];
-    if (file) {
-      const base64 = (await getBase64(file)) as string;
-      console.log("base64", base64);
-
-      setUserCredentials({
-        ...(userCredentials as User),
-        userPicture: typeof base64 === "string" ? base64 : "",
-      });
-      setProfilePicture(base64);
-    }
-  };
   const handleInputCredentialsChange = (e: ChangeEvent<HTMLInputElement>) => {
     setUserCredentials({
       ...(userCredentials as User),
@@ -182,8 +168,7 @@ const Signup = () => {
               onChange={handleInputCredentialsChange}
               required
             />
-            <input type="file" onChange={handleFileSelect} />
-            <img src={userCredentials?.userPicture} />
+            <ImageInput state={profilePicture} setState={setProfilePicture} />
 
             <div style={{ marginTop: "20px" }}>
               {profilePicture ? (
