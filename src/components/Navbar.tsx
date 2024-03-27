@@ -28,7 +28,6 @@ const Navbar = () => {
       {session && (
         <>
           {session.user?.email}
-
           <button
             onClick={() => {
               signOut();
