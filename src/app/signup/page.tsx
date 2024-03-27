@@ -185,12 +185,14 @@ const Signup = () => {
               type="text"
               className="w-full border border-gray-300 text-black rounded px-3 py-2 mb-4 focus:outline-none focus:border-blue-400 focus:text-black"
               placeholder="Email"
+              onChange={handleInputCredentialsChange}
               required
             />
             <input
               type="password"
               className="w-full border border-gray-300 text-black rounded px-3 py-2 mb-4 focus:outline-none focus:border-blue-400 focus:text-black"
               placeholder="Password"
+              onChange={handleInputCredentialsChange}
               required
             />
 
@@ -198,6 +200,7 @@ const Signup = () => {
               type="text"
               className="w-full border border-gray-300 text-black rounded px-3 py-2 mb-4 focus:outline-none focus:border-blue-400 focus:text-black"
               placeholder="Username"
+              onChange={handleInputCredentialsChange}
               required
             />
             <input type="file" onChange={handleFileSelect} />
