@@ -2,12 +2,10 @@ import { v2 as cloudinary } from "cloudinary";
 import { NextRequest, NextResponse } from "next/server";
 
 const POST = async (req: NextRequest) => {
-  console.log("function for image");
   const data = await req.formData();
-  const file = data.get("userPicture") as File;
-  console.log("req", file);
+  const image = data.get("userPicture") as unknown as File;
 
-  if (!file) {
+  if (!image) {
     console.log("file format not supported.");
     return new NextResponse("no file found", {
       status: 404,
@@ -16,7 +14,8 @@ const POST = async (req: NextRequest) => {
 
   try {
     // Get the stream directly from the File object
-    const pictureUpload = await cloudinary.uploader.upload(file, {
+    const pictureUpload = await cloudinary.uploader.upload_stream({
+      image,
       folder: "travelbuddy",
       transformation: [{ width: 400, height: 400, crop: "fill" }],
     });
@@ -26,8 +25,8 @@ const POST = async (req: NextRequest) => {
         message: "file uploaded successfully",
         error: false,
         data: {
-          imageUrl: pictureUpload.secure_url,
-          public_id: pictureUpload.public_id,
+          imageUrl: pictureUpload?.secure_url,
+          public_id: pictureUpload?.public_id,
         },
       },
       {

@@ -38,7 +38,7 @@ const Signup = () => {
     try {
       console.log("selectedFile", selectedFile);
       const response = await fetch(
-        "http://localhost:3000/api/uploadimage/",
+        "http://localhost:3000/api/uploadimage",
         requestOptions
       );
       console.log("response of an image fetch", response);
