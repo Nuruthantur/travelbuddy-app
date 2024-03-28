@@ -1,105 +1,190 @@
-// "use client"; //because using usesession hook
-// import React, { useEffect, useState } from "react";
-// import Link from "next/link";
-// import { signIn, useSession } from "next-auth/react";
-// import { useRouter } from "next/navigation";
+"use client";
 
-// const Login = () => {
-//   const router = useRouter();
-//   const [error, setError] = useState("");
-//   // const session = useSession();
-//   const { data: session, status: sessionStatus } = useSession();
+import Image from "next/image";
+import image from "../../img/background.png";
+import { useRouter } from "next/navigation";
+import React, { useEffect, useState } from "react";
+import { signIn, useSession } from "next-auth/react";
 
-//   useEffect(() => {
-//     if (sessionStatus === "authenticated") {
-//       router.replace("/dashboard");
-//     }
-//   }, [sessionStatus, router]);
+const Login = () => {
+  const router = useRouter();
+  const [error, setError] = useState("");
+  // const session = useSession();
+  const { data: session, status: sessionStatus } = useSession();
 
-//   const isValidEmail = (email: string) => {
-//     const emailRegex = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i;
-//     return emailRegex.test(email);
-//   };
+  useEffect(() => {
+    if (sessionStatus === "authenticated") {
+      router.replace("/dashboard");
+    }
+  }, [sessionStatus, router]);
 
-//   const handleSubmit = async (e: any) => {
-//     e.preventDefault();
-//     const email = e.target[0].value;
-//     const password = e.target[1].value;
+  const isValidEmail = (email: string) => {
+    const emailRegex = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i;
+    return emailRegex.test(email);
+  };
 
-//     if (!isValidEmail(email)) {
-//       setError("Email is invalid");
-//       return;
-//     }
+  const handleSubmit = async (e: any) => {
+    e.preventDefault();
+    const email = e.target[0].value;
+    const password = e.target[1].value;
 
-//     if (!password || password.length < 5) {
-//       setError("Password is invalid");
-//       return;
-//     }
+    if (!isValidEmail(email)) {
+      setError("Email is invalid");
+      return;
+    }
 
-//     const res = await signIn("credentials", {
-//       redirect: false,
-//       email,
-//       password,
-//     });
+    if (!password || password.length < 5) {
+      setError("Password is invalid");
+      return;
+    }
 
-//     if (res?.error) {
-//       setError("Invalid email or password");
-//       if (res?.url) router.replace("/dashboard");
-//     } else {
-//       setError("");
-//     }
-//   };
+    const res = await signIn("credentials", {
+      redirect: false,
+      email,
+      password,
+    });
 
-//   if (sessionStatus === "loading") {
-//     return <h1>Loading...</h1>;
-//   }
+    if (res?.error) {
+      setError("Invalid email or password");
+      if (res?.url) router.replace("/dashboard");
+    } else {
+      setError("");
+    }
+  };
 
-//   return (
-//     sessionStatus !== "authenticated" && ( //if the user is not authenticated
-//       <div className="flex min-h-screen flex-col items-center justify-between p-24">
-//         <div className="bg-[#212121] p-8 rounded shadow-md w-96">
-//           <h1 className="text-4xl text-center font-semibold mb-8">Login</h1>
-//           <form onSubmit={handleSubmit}>
-//             <input
-//               type="text"
-//               className="w-full border border-gray-300 text-black rounded px-3 py-2 mb-4 focus:outline-none focus:border-blue-400 focus:text-black"
-//               placeholder="Email"
-//               required
-//             />
-//             <input
-//               type="password"
-//               className="w-full border border-gray-300 text-black rounded px-3 py-2 mb-4 focus:outline-none focus:border-blue-400 focus:text-black"
-//               placeholder="Password"
-//               required
-//             />
-//             <button
-//               type="submit"
-//               className="w-full bg-blue-500 text-white py-2 rounded hover:bg-blue-600"
-//             >
-//               {" "}
-//               Sign In
-//             </button>
-//             <p className="text-red-600 text-[16px] mb-4">{error && error}</p>
-//           </form>
-//           <button
-//             className="w-full bg-black text-white py-2 rounded hover:bg-gray-800"
-//             onClick={() => {
-//               signIn("google");
-//             }}
-//           >
-//             Sign In with Google
-//           </button>
-//           <div className="text-center text-gray-500 mt-4">- OR -</div>
-//           <Link
-//             className="block text-center text-blue-500 hover:underline mt-2"
-//             href="/signup"
-//           >
-//             Signup Here
-//           </Link>
-//         </div>
-//       </div>
-//     )
-//   );
-// };
+  if (sessionStatus === "loading") {
+    return <h1>Loading...</h1>;
+  }
+  return (
+    sessionStatus !== "authenticated" && (
+      <>
+        <div className="flex items-center	">
+          <Image src={image} alt="travel" style={{ marginTop: "30px" }} />
+        </div>
+        <div className="main_h1 flex justify-center">
+          <h1
+            style={{
+              fontSize: "50px",
+              marginTop: "-40px",
+              color: "white",
+            }}
+          >
+            Travel Buddy
+          </h1>
+        </div>
+        <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
+          <h2 className="mt-4 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
+            Sign in to your account
+          </h2>
 
-// export default Login;
+          <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
+            <form
+              className="space-y-6"
+              action="#"
+              method="POST"
+              onSubmit={handleSubmit}
+            >
+              <div>
+                <label
+                  htmlFor="email"
+                  className="block text-sm font-medium leading-6 text-gray-900"
+                >
+                  Email address
+                </label>
+                <div className="mt-2">
+                  <input
+                    id="email"
+                    name="email"
+                    type="email"
+                    autoComplete="email"
+                    required
+                    className="block w-full bg-white rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                  />
+                </div>
+              </div>
+
+              <div>
+                <div className="flex items-center justify-between">
+                  <label
+                    htmlFor="password"
+                    className="block text-sm font-medium leading-6 text-gray-900"
+                  >
+                    Password
+                  </label>
+                  <div className="text-sm">
+                    <a
+                      href="#"
+                      className="font-bold text-slate-950 hover:text-indigo-500"
+                    >
+                      Forgot password?
+                    </a>
+                  </div>
+                </div>
+                <div className="mt-2">
+                  <input
+                    id="password"
+                    name="password"
+                    type="password"
+                    autoComplete="current-password"
+                    required
+                    className="block w-full bg-white rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                  />
+                </div>
+              </div>
+
+              <div>
+                <button
+                  type="submit"
+                  className="flex w-full justify-center rounded-md bg-slate-950 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm  focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                >
+                  Sign in
+                </button>
+              </div>
+            </form>
+            <button
+              className="flex items-center w-full h-12 mt-3 justify-center rounded-md bg-slate-950  text-sm font-semibold leading-6 text-white shadow-sm  focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+              onClick={() => {
+                signIn("google");
+              }}
+            >
+              Sign In with
+              <svg
+                style={{ paddingLeft: "8px" }}
+                xmlns="http://www.w3.org/2000/svg"
+                width="34"
+                height="34"
+                preserveAspectRatio="xMidYMid"
+                viewBox="0 0 256 262"
+                id="google"
+              >
+                <path
+                  fill="#4285F4"
+                  d="M255.878 133.451c0-10.734-.871-18.567-2.756-26.69H130.55v48.448h71.947c-1.45 12.04-9.283 30.172-26.69 42.356l-.244 1.622 38.755 30.023 2.685.268c24.659-22.774 38.875-56.282 38.875-96.027"
+                ></path>
+                <path
+                  fill="#34A853"
+                  d="M130.55 261.1c35.248 0 64.839-11.605 86.453-31.622l-41.196-31.913c-11.024 7.688-25.82 13.055-45.257 13.055-34.523 0-63.824-22.773-74.269-54.25l-1.531.13-40.298 31.187-.527 1.465C35.393 231.798 79.49 261.1 130.55 261.1"
+                ></path>
+                <path
+                  fill="#FBBC05"
+                  d="M56.281 156.37c-2.756-8.123-4.351-16.827-4.351-25.82 0-8.994 1.595-17.697 4.206-25.82l-.073-1.73L15.26 71.312l-1.335.635C5.077 89.644 0 109.517 0 130.55s5.077 40.905 13.925 58.602l42.356-32.782"
+                ></path>
+                <path
+                  fill="#EB4335"
+                  d="M130.55 50.479c24.514 0 41.05 10.589 50.479 19.438l36.844-35.974C195.245 12.91 165.798 0 130.55 0 79.49 0 35.393 29.301 13.925 71.947l42.211 32.783c10.59-31.477 39.891-54.251 74.414-54.251"
+                ></path>
+              </svg>
+            </button>
+            <p className="mt-10 text-center text-sm text-gray-500">
+              Not a member?{" "}
+              <a href="#" className="font-semibold leading-6 text-slate-950 ">
+                <b>Sign Up</b>
+              </a>
+            </p>
+          </div>
+        </div>
+      </>
+    )
+  );
+};
+export default Login;

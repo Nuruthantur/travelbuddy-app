@@ -5,6 +5,7 @@ const config: Config = {
     "./src/pages/**/*.{js,ts,jsx,tsx,mdx}",
     "./src/components/**/*.{js,ts,jsx,tsx,mdx}",
     "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
+    "./node_modules/react-tailwindcss-datepicker/dist/index.esm.js",
   ],
   theme: {
     extend: {
@@ -15,6 +16,6 @@ const config: Config = {
       },
     },
   },
-  plugins: [require("daisyui"), "@tailwindcss/forms"],
+  plugins: [require("daisyui"), require("@tailwindcss/forms")],
 };
 export default config;

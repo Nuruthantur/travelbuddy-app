@@ -50,12 +50,7 @@ function StepA({
         >
           Next
         </button>
-        <button
-          className="bg-indigo-400 px-4 py-2 rounded-xl "
-          onClick={handleNextStep}
-        >
-          Next
-        </button>
+       
       </div>
     </div>
   );

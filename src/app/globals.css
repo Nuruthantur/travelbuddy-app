@@ -13,7 +13,7 @@
   font-size: 82px !important;
   font-weight: 120px;
   -webkit-text-stroke: 4px white;
-  text-shadow: 7px 7px 7px rgb(118, 118, 225);
+  text-shadow: 7px 7px 7px #7676e1;
   letter-spacing: 4px;
   /* font-style: italic; */
 }
@@ -23,16 +23,15 @@
   font-size: 50px;
   font-weight: 120px;
   -webkit-text-stroke: 2px white;
+  text-shadow: 7px 7px 7px #7676e1;
   letter-spacing: 3px;
 }
 
 .details > img {
-  /* margin-top: 50px; */
   animation-name: rotate;
   animation-duration: 27s;
   animation-iteration-count: infinite;
   animation-timing-function: linear;
-  /* border-radius: 50%; */
 }
 
 @font-face {
@@ -70,8 +69,6 @@ img {
   animation-timing-function: linear;
   /* border-radius: 50%; */
 }
-
-
 
 .step_container {
   display: flex;
@@ -139,7 +136,7 @@ img {
   }
 }
 
+.font-outline-2 {
+  -webkit-text-stroke: 2px black;
+}
 
-  .font-outline-2 {
-    -webkit-text-stroke: 2px black;
-  }
