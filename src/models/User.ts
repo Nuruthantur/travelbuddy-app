@@ -2,10 +2,23 @@ import mongoose from "mongoose";
 
 const userSchema = new mongoose.Schema(
   {
+    userName: { type: String, required: true, unique: true },
+    authType: { type: String, required: true, enum: ["credentials", "google"] },
     email: { type: String, required: true, unique: true },
     password: { type: String, required: false },
-    userName: { type: String, required: true },
+    firstName: { type: String, required: false },
+    lastName: { type: String, required: false },
+    birthDate: { type: Date, required: false },
+    aboutYourself: { type: String, required: false },
+    travelingDates: { type: String, required: false },
+    travelingDestinations: { type: String, required: false },
+    hobbies: { type: String, required: false },
     userPicture: { type: String, required: false },
+    hometown: { type: Date, required: true },
+    public_id: { type: String, required: false },
+    likes: [{ type: mongoose.Schema.Types.ObjectId, ref: "user" }],
+    requests: [{ type: mongoose.Schema.Types.ObjectId, ref: "user" }],
+    connections: [{ type: mongoose.Schema.Types.ObjectId, ref: "user" }],
   },
   { timestamps: true }
 );

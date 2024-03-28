@@ -4,34 +4,55 @@ const typeDefs = `#graphql
     email: String!
     userName: String!
     password: String!
+    firstName: String
+    lastName: String
+    hometown: String
   }
+
   type successMessage{
     message: String!
   }
+  
   type Query {
+    getAllUsers: [User]
     users: [User]
+    getUsersById(id: ID!): User
+    testFunction: String
+    getMe: User
     user: User
   }
+
   input NewUserInput {
     email: String!
     userName: String!
     password: String!
   }
-  input updateUser {
+
+  # input updateUser {
+  # firstName: String
+  # lastName: String
+  # birthDate: String
+  # hometown: String
+  # travelingDates: String
+  # travelingDestinations: String
+  # }
+  
+  input updateUserInformation {
   firstName: String
   lastName: String
   birthDate: String
   hometown: String
-  travelDates: String
-  favDestinations: String
+  travelingDates: String
+  travelingDestinations: String
   }
   
-
   type Mutation {
-    createUser(input: NewUserInput!): User
-    # createUser(email: String, userName: String, password: String): User
-    updateUsersEmail(id: ID!, email: String!): User
+    updateUserInformation(id: ID!, input: updateUserInformation!): User
+    updateUserTravelingDates(id: ID!, travelingDates: String): successMessage
     signup(input: NewUserInput!): User
+    login(email: String!, password: String!): User
+    logout: successMessage
+    deleteUser(id: ID!): successMessage
     completeUserSignup(input: updateUser!): User
     
   }
