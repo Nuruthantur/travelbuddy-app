@@ -7,7 +7,7 @@ const Dashboard = async () => {
   if (!session) {
     redirect("/");
   }
-  return <div>dashboard</div>;
+  return <div>dashboard //TODO - create cards that show the other user</div>;
 };
 
 export default Dashboard;

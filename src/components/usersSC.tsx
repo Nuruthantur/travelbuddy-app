@@ -20,7 +20,6 @@ const UsersSC = async (props: Props) => {
                 <li>{user.firstName}</li>
                 <li>{user.lastName}</li>
                 <li>{user.email}</li>
-                <li>{user.password}</li>
                 <li>{user.userName}</li>
               </div>
             </>

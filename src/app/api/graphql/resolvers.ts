@@ -18,6 +18,9 @@ type updateUser = {
   travelDates?: Date;
   favDestinations?: string;
 };
+type updateUserTravelDates = {
+  travelDates?: string;
+};
 
 const resolvers = {
   Query: {
@@ -42,6 +45,7 @@ const resolvers = {
     },
   },
   Mutation: {
+    //create a new user
     createUser: async (_: undefined, params: param) => {
       console.log(params);
       try {
@@ -104,6 +108,73 @@ const resolvers = {
         return user;
       } catch (error) {
         console.log(error);
+      }
+    },
+    // user can update their information in the database
+    updateUserInformation: async (
+      _: undefined,
+      params: {
+        id: string;
+        userName: string;
+        email: string;
+        firstName: string;
+        lastName: string;
+        homeTown: string;
+      },
+      contextValue: myContext
+    ) => {
+      try {
+        if (!contextValue.session) {
+          return new GraphQLError("User is not authenticated to do that", {
+            extensions: {
+              code: "UNAUTHENTICATED",
+              http: { status: 401 },
+            },
+          });
+        }
+        await dbConnect();
+        const updatedUser = await UserModel.findByIdAndUpdate(
+          // TODO - do this with the token and not the id (or get the session of a user from next auth)
+          params.id,
+          {
+            email: params.email,
+            firstName: params.firstName,
+            lastName: params.lastName,
+          },
+          { new: true }
+        );
+        return updatedUser;
+        // if you want to check with message also change in the typeDefs to message instead of :User
+        // return { message: "User Information updated" };
+      } catch (error) {
+        console.log(error);
+      }
+    },
+    updateUserTravelDates: async (
+      _: undefined,
+      args: updateUserTravelDates,
+      context: myContext
+    ) => {
+      try {
+        if (!context.session) {
+          return new GraphQLError("User not logged in", {
+            extensions: {
+              code: "UNAUTHENTICATED",
+              http: { status: 401 },
+            },
+          });
+        }
+        await dbConnect();
+        const updatedUserWithNewTravelDates = await UserModel.findByIdAndUpdate(
+          {
+            travelDates: args.travelDates,
+          },
+          { new: true }
+        );
+        // return updatedUserWithNewTravelDates;
+        return { message: "Travel dates successfully updated" };
+      } catch (err) {
+        console.log(err);
       }
     },
   },
