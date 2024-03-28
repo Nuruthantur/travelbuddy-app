@@ -51,6 +51,9 @@ const typeDefs = `#graphql
     updateUserInformation(id: ID!, input: updateUserInformation!): User
     updateUserTravelDates(id: ID!, travelDates: String): successMessage
     signup(input: NewUserInput!): User
+    login(email: String!, password: String!): User
+    logout: successMessage
+    deleteUser(id: ID!): successMessage
     completeUserSignup(input: updateUser!): User
     
   }

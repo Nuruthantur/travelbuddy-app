@@ -167,6 +167,12 @@ const resolvers = {
         console.log(error);
       }
     },
+    deleteUser: async (_: undefined, args: any) => {
+      await dbConnect();
+      const deletedUser = await UserModel.findByIdAndDelete(args.id);
+      return { message: `User ${deletedUser?.name} has been removed` };
+      // return deletedUser;
+    },
   },
 };
 

@@ -19,13 +19,14 @@ async function UserCardCC({ onUserSelect }: any) {
   await dbConnect();
   const { loading, error, data } = useQuery(GET_ALL_USERS);
   console.log(loading, error, data);
+  const users = data?.getAllUsers.users;
   //   const T = useApolloClient().readQuery<{ users: User[] }
   if (loading) return `Loading...`;
   if (error) return `Error!  ${error.message}`;
   return (
     <div style={{ border: "solid black 1px", padding: "0 1rem" }}>
       {/* <select name="user" onChange={onUserSelect}>
-        {data.users.map((user: User) => {
+        { users && users.map((user: User) => {
           <option key={user._id} value={user.userName}>
             {user.userName}
           </option>;
