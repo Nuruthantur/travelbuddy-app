@@ -43,8 +43,8 @@ type updateUserInformation = {
   lastName: string;
   homeTown: string;
 };
-type updateUserTravelDates = {
-  travelDates?: string;
+type updateUserTravelingDates = {
+  travelingDates?: string;
 };
 
 const resolvers = {
@@ -124,9 +124,9 @@ const resolvers = {
         console.log(error);
       }
     },
-    updateUserTravelDates: async (
+    updateUserTravelingDates: async (
       _: undefined,
-      args: updateUserTravelDates,
+      args: updateUserTravelingDates,
       context: MyContext
     ) => {
       try {
@@ -139,13 +139,14 @@ const resolvers = {
           });
         }
         await dbConnect();
-        const updatedUserWithNewTravelDates = await UserModel.findByIdAndUpdate(
-          {
-            travelDates: args.travelDates,
-          },
-          { new: true }
-        );
-        // return updatedUserWithNewTravelDates;
+        const updatedUserWithNewTravelingDates =
+          await UserModel.findByIdAndUpdate(
+            {
+              travelingDates: args.travelingDates,
+            },
+            { new: true }
+          );
+        // return updatedUserWithNewTravelingDates;
         return { message: "Travel dates successfully updated" };
       } catch (err) {
         console.log(err);
