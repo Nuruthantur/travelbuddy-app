@@ -13,9 +13,12 @@ const userSchema = new mongoose.Schema(
     travelingDates: { type: String, required: false },
     travelingDestinations: { type: String, required: false },
     hobbies: { type: String, required: false },
-    password: { type: String, required: false },
-    userName: { type: String, required: true },
     userPicture: { type: String, required: false },
+    hometown: { type: Date, required: true },
+    public_id: { type: String, required: false },
+    likes: [{ type: mongoose.Schema.Types.ObjectId, ref: "user" }],
+    requests: [{ type: mongoose.Schema.Types.ObjectId, ref: "user" }],
+    connections: [{ type: mongoose.Schema.Types.ObjectId, ref: "user" }],
   },
   { timestamps: true }
 );
