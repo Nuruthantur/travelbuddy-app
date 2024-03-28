@@ -15,7 +15,9 @@ const DateRangePicker = () => {
   };
 
   return (
-    <Datepicker useRange={false} value={value} onChange={handleValueChange} />
+    <div>
+      <Datepicker useRange={false} value={value} onChange={handleValueChange} />
+    </div>
   );
 };
 export default DateRangePicker;

@@ -185,7 +185,7 @@ export default function Details2() {
                 <div className="sm:col-span-3 mt-2">
                   <label
                     htmlFor="travelingDates"
-                    className="block text-sm font-medium leading-6 text-gray-900"
+                    className=" block text-sm font-medium leading-6 text-gray-900"
                   >
                     Traveling Dates
                   </label>
