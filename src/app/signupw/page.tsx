@@ -1,5 +1,5 @@
 "use client";
-import { User } from "@/@types/User";
+import User from "@/@types/User";
 import ImageInput from "@/components/ImageInput";
 import { signIn, useSession } from "next-auth/react";
 import Link from "next/link";
