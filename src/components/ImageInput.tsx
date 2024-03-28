@@ -20,7 +20,6 @@ const ImageInput = ({ state, setState }: Props) => {
   return (
     <div>
       <input type="file" onChange={handleFileSelect} />
-      <img src={state} />
     </div>
   );
 };

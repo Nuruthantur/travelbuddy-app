@@ -1,26 +1,19 @@
-// interface User {
-//   _id: string;
-//   userName: string;
-//   email: string;
-//   password: string;
-//   firstName: string;
-//   lastName: string;
-//   birthDate: Date;
-//   // profilePicture?: { URL: string; public_Id: string };
-//   public_id?: string;
-//   hometown?: string;
-//   travelDates?: Date;
-//   likes?: string;
-//   requests?: string;
-//   connections?: string;
-// }
-
-export interface User {
+export default interface User {
   _id: string;
+  userName: string;
   email: string;
   password: string;
-  userName: string;
-  userPicture?: string;
+  firstName?: string;
+  lastName?: string;
+  birthDate?: Date;
   public_id?: string;
-  favDestinations?: string;
+  likes?: string;
+  requests?: string;
+  connections?: string;
+  hometown?: string;
+  aboutYourself?: string;
+  travelingDates?: string;
+  travelingDestinations?: string;
+  agreeToTerms?: boolean;
+  userPicture?: string;
 }

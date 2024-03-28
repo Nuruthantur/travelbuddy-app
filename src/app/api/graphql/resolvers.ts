@@ -1,5 +1,5 @@
 import dbConnect from "@/lib/connectDB";
-import UserModel from "@/models/users";
+import UserModel from "@/models/User";
 import { myContext } from "./route";
 import { GraphQLError } from "graphql";
 

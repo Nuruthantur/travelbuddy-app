@@ -57,7 +57,7 @@ const Signup = () => {
     }
 
     try {
-      const res = await fetch("/api/signup", {
+      const res = await fetch("/api/signupw", {
         method: "POST",
 
         body: JSON.stringify({
