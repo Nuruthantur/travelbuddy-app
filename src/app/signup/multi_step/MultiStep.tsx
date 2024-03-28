@@ -21,7 +21,7 @@ export interface newUserValues {
   agreeToTerms: boolean;
 }
 
-const initialFormData:newUserValues = {
+const initialFormData: newUserValues = {
   firstName: "",
   lastName: "",
   userName: "",

@@ -50,7 +50,6 @@ function StepA({
         >
           Next
         </button>
-       
       </div>
     </div>
   );
