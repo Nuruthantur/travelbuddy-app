@@ -10,13 +10,24 @@ type param = {
     userName: string;
   };
 };
-type updateUser = {
-  firstName?: string;
-  lastName?: string;
-  birthDate?: Date;
-  hometown?: string;
-  travelDates?: Date;
-  favDestinations?: string;
+// type updateUser = {
+//   firstName?: string;
+//   lastName?: string;
+//   birthDate?: Date;
+//   hometown?: string;
+//   travelDates?: Date;
+//   favDestinations?: string;
+// };
+type updateUserInformation = {
+  id: string;
+  userName: string;
+  email: string;
+  firstName: string;
+  lastName: string;
+  homeTown: string;
+};
+type updateUserTravelDates = {
+  travelDates?: string;
 };
 
 const resolvers = {
@@ -77,6 +88,33 @@ const resolvers = {
         // return { message: "Email updated" };
       } catch (error) {
         console.log(error);
+      }
+    },
+    updateUserTravelDates: async (
+      _: undefined,
+      args: updateUserTravelDates,
+      context: MyContext
+    ) => {
+      try {
+        if (!context.session) {
+          return new GraphQLError("User not logged in", {
+            extensions: {
+              code: "UNAUTHENTICATED",
+              http: { status: 401 },
+            },
+          });
+        }
+        await dbConnect();
+        const updatedUserWithNewTravelDates = await UserModel.findByIdAndUpdate(
+          {
+            travelDates: args.travelDates,
+          },
+          { new: true }
+        );
+        // return updatedUserWithNewTravelDates;
+        return { message: "Travel dates successfully updated" };
+      } catch (err) {
+        console.log(err);
       }
     },
     signup: async (_: undefined, params: param) => {

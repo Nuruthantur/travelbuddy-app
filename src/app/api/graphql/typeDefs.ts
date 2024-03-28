@@ -4,12 +4,19 @@ const typeDefs = `#graphql
     email: String!
     userName: String!
     password: String!
+    firstName: String
+    lastName: String
+    homeTown: String
   }
   type successMessage{
     message: String!
   }
   type Query {
     users: [User]
+    getUsersById(id: ID!): User
+
+    testFunction: String
+    getMe: User
     user: User
   }
   input NewUserInput {
@@ -17,7 +24,17 @@ const typeDefs = `#graphql
     userName: String!
     password: String!
   }
-  input updateUser {
+
+  # input updateUser {
+  # firstName: String
+  # lastName: String
+  # birthDate: String
+  # hometown: String
+  # travelDates: String
+  # favDestinations: String
+  # }
+  
+  input updateUserInformation {
   firstName: String
   lastName: String
   birthDate: String
@@ -28,9 +45,8 @@ const typeDefs = `#graphql
   
 
   type Mutation {
-    createUser(input: NewUserInput!): User
-    # createUser(email: String, userName: String, password: String): User
-    updateUsersEmail(id: ID!, email: String!): User
+    updateUserInformation(id: ID!, input: updateUserInformation!): User
+    updateUserTravelDates(id: ID!, travelDates: String): successMessage
     signup(input: NewUserInput!): User
     completeUserSignup(input: updateUser!): User
     
