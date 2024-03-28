@@ -2,7 +2,6 @@ import dbConnect from "@/utils/dbConnect";
 import UserModel from "@/models/User";
 import { MyContext } from "./route";
 import { GraphQLError } from "graphql";
-import UserModel from "@/models/User";
 
 //TODO - write a query that gives back the session of the user as getMe()
 type param = {
@@ -12,29 +11,8 @@ type param = {
     userName: string;
   };
 };
-// type updateUser = {
-//   firstName?: string;
-//   lastName?: string;
-//   birthDate?: Date;
-//   hometown?: string;
-//   travelDates?: Date;
-//   favDestinations?: string;
-// };
-type updateUserInformation = {
-  id: string;
-  userName: string;
-  email: string;
-  firstName: string;
-  lastName: string;
-  homeTown: string;
-// type updateUser = {
-//   firstName?: string;
-//   lastName?: string;
-//   birthDate?: Date;
-//   hometown?: string;
-//   travelDates?: Date;
-//   favDestinations?: string;
-// };
+
+
 type updateUserInformation = {
   id: string;
   userName: string;
