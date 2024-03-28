@@ -13,6 +13,9 @@ const userSchema = new mongoose.Schema(
     travelingDates: { type: String, required: false },
     travelingDestinations: { type: String, required: false },
     hobbies: { type: String, required: false },
+    password: { type: String, required: false },
+    userName: { type: String, required: true },
+    userPicture: { type: String, required: false },
   },
   { timestamps: true }
 );

@@ -73,3 +73,4 @@ const uploadPicture = async (req: any, res: any) => {
 };
 
 export { POST };
+
