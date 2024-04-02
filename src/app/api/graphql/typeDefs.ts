@@ -54,7 +54,6 @@ const typeDefs = `#graphql
     logout: successMessage
     deleteUser(id: ID!): successMessage
     completeUserSignup(input: updateUser!): User
-    
   }
 `;
 

@@ -10,6 +10,7 @@ import { Session, getServerSession } from "next-auth";
 export type MyContext = {
   session: Session | null;
 };
+
 const server = new ApolloServer<MyContext>({
   resolvers,
   typeDefs,

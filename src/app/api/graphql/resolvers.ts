@@ -12,14 +12,13 @@ type param = {
   };
 };
 
-
 type updateUserInformation = {
   id: string;
   userName: string;
   email: string;
   firstName: string;
   lastName: string;
-  homeTown: string;
+  hometown: string;
 };
 type updateUserTravelingDates = {
   travelingDates?: string;
@@ -38,7 +37,7 @@ const resolvers = {
     },
     users: async (parent: any, args: any, contextValue: MyContext) => {
       await dbConnect();
-      // if (!contextValue.session || !contextValue.session.roles.includes('admin')) return null;
+      // if (!contextValue.session || !contextValue.session.roles.includes('premiumUser')) return null;
       // return contextValue.models.User.getAll();
     },
     getUsersById: async () => {},
@@ -151,6 +150,7 @@ const resolvers = {
       const deletedUser = await UserModel.findByIdAndDelete(args.id);
       return { message: `User ${deletedUser?.name} has been removed` };
       // return deletedUser;
+      // search for messages of this user and delete them
     },
   },
 };
