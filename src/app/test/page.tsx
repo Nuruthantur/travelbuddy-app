@@ -18,8 +18,10 @@ export default function TestPage() {
       {/* <UserCardCC /> */}
 
       {/* not working */}
-      <UserCardSC searchParams={{}} />
-      {/* <Card1 searchParams={{}} /> */}
+      {/* <UserCardSC searchParams={{}} /> */}
+
+      {/* working tinder cards but not able to get data from api */}
+      <Card1 searchParams={{}} />
     </div>
   );
 }

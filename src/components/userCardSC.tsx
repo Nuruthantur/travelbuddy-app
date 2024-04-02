@@ -21,7 +21,7 @@ export const GETALLUSERS = gql`
     userName
     firstName
     lastName
-    homeTown
+    hometown
   }
 `;
 
@@ -30,10 +30,11 @@ const UserCardSC = async ({ searchParams }: Props) => {
   const data = await getClient().query<QueryRes>({
     query: GETALLUSERS,
     variables: {
+      email: searchParams.email ? searchParams.email : "",
       userName: searchParams.userName ? searchParams.userName : "",
       firstName: searchParams.firstName ? searchParams.firstName : "",
       lastName: searchParams.lastName ? searchParams.lastName : "",
-      homeTown: searchParams.homeTown ? searchParams.homeTown : "",
+      hometown: searchParams.hometown ? searchParams.hometown : "",
     },
   });
 
@@ -42,7 +43,7 @@ const UserCardSC = async ({ searchParams }: Props) => {
   return (
     <>
       <div className="user-card bg-white shadow-md rounded-lg p-4 flex flex-col sm:flex-col sm:justify-between sm:items-center">
-        <div className="user-profile-picture mb-4">
+        {/* <div className="user-profile-picture mb-4">
           <Image
             src="user.profilePicture"
             alt={`Profile picture of ${userinfo[0].userName}`}
@@ -51,41 +52,33 @@ const UserCardSC = async ({ searchParams }: Props) => {
             height={24}
             loading="lazy"
           />
+        </div> */}
+
+        <div className="user-information">
+          <div>
+            Name:{" "}
+            <span id="userName" className="font-bold">
+              {userinfo[0].firstName && userinfo[0].lastName}
+            </span>
+          </div>
+          <div>
+            Email: <span id="email">{userinfo[0].email}</span>
+          </div>
+          <div>
+            Hometown: <span id="hometown">{userinfo[0].hometown}</span>
+          </div>
         </div>
-        <div className="user-actions flex">
+        <div className="user-actions flex pt-4">
           <button
             id="like-btn"
-            onClick={() => {
-              console.log("button was clicked");
-            }}
             className="like-btn bg-blue-500 text-white px-4 py-2 rounded-md mr-2 hover:bg-blue-600">
             Like
           </button>
           <button
             id="next-btn"
-            onClick={() => {
-              console.log("next button was clicked");
-            }}
             className="next-btn bg-gray-500 text-white px-4 py-2 rounded-md hover:bg-gray-600">
             Next
           </button>
-        </div>
-        <div className="user-information">
-          <div>
-            Name:{" "}
-            <span id="user-name" className="font-bold">
-              Users name goes here
-            </span>
-          </div>
-          <div>
-            Age: <span id="user-age">Age</span>
-          </div>
-          <div>
-            Distance: <span id="user-distance">Distance from user?</span>
-          </div>
-          <div>
-            Bio: <span id="user-bio">Bio</span>
-          </div>
         </div>
       </div>
       ;
@@ -98,7 +91,7 @@ export default UserCardSC;
 
 // type Props = {};
 
-// const userCardSC = async (props: Props) => {
+// const UserCardSC = async (props: Props) => {
 //   const users = (await UserModel.find({})) as User[];
 
 //   // const { loading, error, data } = useQuery();
@@ -122,16 +115,16 @@ export default UserCardSC;
 //           <div className="user-information">
 //             <div>
 //               Name:
-//               <span id="user-name" className="font-bold">
+//               <span id="name" className="font-bold">
 //                 {user.firstName && user.lastName}
 //               </span>
 //             </div>
 
 //             <div>
-//               Email: <span id="user-age">{user.email}</span>
+//               Email: <span id="email">{user.email}</span>
 //             </div>
 //             <div>
-//               Hometown: <span id="user-distance">{user.hometown}</span>
+//               Hometown: <span id="hometown">{user.hometown}</span>
 //             </div>
 //           </div>
 //           <div className="user-actions flex pt-4">

@@ -1,20 +1,20 @@
 const typeDefs = `#graphql
   type User {
     id: ID!
+    userName: String!
     password: String!
+    email: String!
     firstName: String
     lastName: String
-    email: String!
-    userName: String!
     hometown: String
-    # birthDate: Date!
-    public_id: String!
-    likes: String!
-    requests: String!
-    connections: String!
-    aboutYourself: String!
-    travelingDates: String!
-    travelingDestinations: String!
+    birthDate: String
+    public_id: String
+    likes: String
+    requests: String
+    connections: String
+    aboutYourself: String
+    travelingDates: String
+    travelingDestinations: String
     userPicture: String
   }
 
