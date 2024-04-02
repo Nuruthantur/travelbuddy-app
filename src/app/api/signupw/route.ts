@@ -1,6 +1,6 @@
 import { uploadImage } from "@/config/cloudinary";
 import UserModel from "@/models/User";
-import connect from "@/utils/db";
+import connect from "@/utils/dbConnect";
 import bcrypt from "bcryptjs";
 import { v2 as cloudinary } from "cloudinary";
 
