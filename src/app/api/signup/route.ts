@@ -13,7 +13,7 @@ const POST = async (request: NextRequest) => {
   const existingUser = await UserModel.findOne({ email: values.email });
   if (existingUser) {
     console.log("existingUser :>> ", existingUser);
-    return new NextResponse("Email already registered", {
+    return NextResponse.json("Email already registered", {
       status: 400,
     });
   }
@@ -27,11 +27,11 @@ const POST = async (request: NextRequest) => {
   });
   try {
     await newUser.save();
-    return new NextResponse("user is registered", {
+    return NextResponse.json("user is registered", {
       status: 200,
     });
   } catch (error: any) {
-    return new NextResponse(error, {
+    return NextResponse.json(error.message, {
       status: 500,
     });
   }
@@ -73,4 +73,3 @@ const uploadPicture = async (req: any, res: any) => {
 };
 
 export { POST };
-
