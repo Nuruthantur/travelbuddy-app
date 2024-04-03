@@ -1,11 +1,11 @@
-"use client";
+// "use client";
 
 import User from "@/@types/User";
 import { gql, useApolloClient, useQuery } from "@apollo/client";
 import { getClient } from "@/lib/client";
 import dbConnect from "@/utils/dbConnect";
 
-const GET_ALL_USERS = gql`
+const GETALLUSERS = gql`
   query getAllUsers {
     users {
       userName
@@ -17,7 +17,7 @@ const GET_ALL_USERS = gql`
 `;
 async function UserCardCC({ onUserSelect }: any) {
   await dbConnect();
-  const { loading, error, data } = useQuery(GET_ALL_USERS);
+  const { loading, error, data } = useQuery(GETALLUSERS);
   console.log(loading, error, data);
   const users = data?.getAllUsers.users;
   //   const T = useApolloClient().readQuery<{ users: User[] }

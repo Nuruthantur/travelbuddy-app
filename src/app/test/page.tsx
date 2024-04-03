@@ -3,7 +3,7 @@ import UserCardCC from "@/components/UserCardCC";
 import UserCardSC from "@/components/userCardSC";
 import UsersSC from "@/components/usersSC";
 import TestComponent from "../../components/testComponentCC";
-import Card1 from "@/components/Card1";
+import Card1 from "@/components/Card";
 
 export default function TestPage() {
   return (
@@ -18,10 +18,10 @@ export default function TestPage() {
       {/* <UserCardCC /> */}
 
       {/* not working */}
-      {/* <UserCardSC searchParams={{}} /> */}
+      <UserCardSC searchParams={{}} />
 
       {/* working tinder cards but not able to get data from api */}
-      <Card1 searchParams={{}} />
+      {/* <Card1 searchParams={{}} /> */}
     </div>
   );
 }
