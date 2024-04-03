@@ -43,8 +43,6 @@
   src: url("../font/ITCBradleyHandStd.ttf");
 }
 
-
-
 h3 {
   font-family: "Bradley";
   font-weight: bold;
@@ -71,6 +69,7 @@ img {
 .step_container {
   display: flex;
   justify-content: space-between;
+  /* align-items: end; */
   position: relative; /* Set position to relative */
 }
 
@@ -137,4 +136,3 @@ img {
 .font-outline-2 {
   -webkit-text-stroke: 2px black;
 }
-

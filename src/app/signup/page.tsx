@@ -12,6 +12,7 @@ export default function Signup() {
   const [error, setError] = useState("");
   const router = useRouter();
   const { data: session, status: sessionStatus } = useSession();
+  console.log("sessionStatus :>> ", sessionStatus);
 
   useEffect(() => {
     if (sessionStatus === "authenticated") {
@@ -38,7 +39,8 @@ export default function Signup() {
     if (formData.userName === "") {
       return;
     }
-    console.log("formData2 :>> ", formData);
+    console.log("formData :>> ", formData);
+
     try {
       const res = await fetch("/api/signup", {
         method: "POST",
@@ -47,9 +49,9 @@ export default function Signup() {
         },
         body: JSON.stringify(formData),
       });
-      console.log("res :>> ", res);
+
       if (res.status === 400) {
-        setError("This email is alread registered");
+        setError("This email is already registered");
       }
       if (res.status === 200) {
         setError("");
@@ -68,7 +70,12 @@ export default function Signup() {
     sessionStatus !== "authenticated" && (
       <>
         <div className="flex items-center">
-          <Image src={image} alt="travel" style={{ marginTop: "30px" }} />
+          <Image
+            src={image}
+            alt="travel"
+            style={{ marginTop: "30px" }}
+            priority
+          />
         </div>
         <div className="main_h1 flex justify-center">
           <h1
@@ -88,4 +95,3 @@ export default function Signup() {
     )
   );
 }
-

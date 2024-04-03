@@ -9,12 +9,12 @@ const userSchema = new mongoose.Schema(
     firstName: { type: String, required: false },
     lastName: { type: String, required: false },
     birthDate: { type: Date, required: false },
-    aboutYourself: { type: String, required: false },
+    aboutYourSelf: { type: String, required: false },
     travelingDates: { type: String, required: false },
     travelingDestinations: { type: String, required: false },
     hobbies: { type: String, required: false },
     userPicture: { type: String, required: false },
-    hometown: { type: Date, required: true },
+    hometown: { type: String, required: false },
     public_id: { type: String, required: false },
     likes: [{ type: mongoose.Schema.Types.ObjectId, ref: "user" }],
     requests: [{ type: mongoose.Schema.Types.ObjectId, ref: "user" }],
@@ -26,10 +26,15 @@ const userSchema = new mongoose.Schema(
 let UserModel: any;
 
 try {
-  UserModel = mongoose.model("User");
+  UserModel = mongoose.model("user");
 } catch {
-  UserModel = mongoose.model("User", userSchema);
+  UserModel = mongoose.model("user", userSchema);
 }
+// try {
+//   UserModel = mongoose.model("user");
+// } catch {
+//   UserModel = mongoose.model("user", userSchema);
+// }
 
 export default UserModel;
 

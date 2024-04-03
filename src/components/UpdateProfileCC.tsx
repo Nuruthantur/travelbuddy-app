@@ -1,12 +1,67 @@
+"use client";
+
+import { gql, useMutation, useQuery } from "@apollo/client";
+import {
+  Key,
+  ReactElement,
+  JSXElementConstructor,
+  ReactNode,
+  ReactPortal,
+  AwaitedReactNode,
+} from "react";
 import Image from "next/image";
 import image from "../img/full-background.png";
 import { PhotoIcon, UserCircleIcon } from "@heroicons/react/24/solid";
 import DateRangePicker from "./DateRangePicker";
+import User from "@/@types/User";
 
-export default function Details2() {
+const UPDATE_USER = gql`
+  mutation UpdateUserInformation($input: UpdateUserInformation!, $id: ID!) {
+    updateUserInformation(input: $input, id: $id) {
+      firstName
+      lastName
+    }
+  }
+`;
+export default function UpdateProfile() {
+  const [updateUser, { loading, error, data }] = useMutation(UPDATE_USER);
+  console.log("data :>> ", data);
+  const handleChangeUser = () => {
+    updateUser({
+      variables: {
+        input: {
+          firstName: "Rauuul",
+          lastName: "Hernandez",
+        },
+        id: "660bc73bb1f258cd49873a23",
+      },
+    });
+  };
+
+  const submitInputs = () => {};
   return (
     <>
-      <form>
+      <button onClick={handleChangeUser} className="text-black">
+        Update User
+      </button>
+      {data?.updatedUser.map((user: User) => {
+        return (
+          <>
+            <div key={user._id}>
+              <li>{user.userName}</li>
+              <li>{user.email}</li>
+              <li>{user.firstName}</li>
+              <li>{user.lastName}</li>
+              <li>{user.hometown}</li>
+              <li>{user.birthDate}</li>
+              <li>{user.aboutYourSelf}</li>
+              <li>{user.travelingDates}</li>
+              <li>{user.travelingDestinations}</li>
+            </div>
+          </>
+        );
+      })}
+      <form onSubmit={submitInputs}>
         <div className="col-span-full">
           <div className="text-center bg-zinc-200 p-4  border-b-4 border-white">
             <h2 className="text-xl font-semibold leading-7 mt-4 mb-16 text-gray-900">

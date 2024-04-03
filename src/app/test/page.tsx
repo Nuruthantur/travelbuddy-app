@@ -1,8 +1,9 @@
-import LoginFormTest from "@/components/LoginFormTest";
+// import LoginFormTest from "@/components/LoginFormTest";
 import UserCardCC from "@/components/UserCardCC";
 import UserCardSC from "@/components/userCardSC";
 import UsersSC from "@/components/usersSC";
-import TestComponent from "../../components/testComponentCC";
+import TestComponent from "@/components/testComponentCC";
+import UpdateProfile from "@/components/UpdateProfileCC";
 
 export default function TestPage() {
   return (
@@ -17,7 +18,10 @@ export default function TestPage() {
       {/* <UserCardCC /> */}
 
       {/* not working */}
-      <UserCardSC />
+      {/* <UserCardSC /> */}
+      <TestComponent />
+      {/* <UsersSC /> */}
+      {/* <UpdateProfile /> */}
     </div>
   );
 }

@@ -1,12 +1,12 @@
 "use client";
-import { User } from "@/@types/User";
+import User from "@/@types/User";
 import ImageInput from "@/components/ImageInput";
 import { signIn, useSession } from "next-auth/react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import React, { ChangeEvent, useEffect, useState } from "react";
 
-const Signup = () => {
+const part2 = () => {
   const [error, setError] = useState("");
   const [userCredentials, setUserCredentials] = useState<User | null>(null);
   const [profilePicture, setProfilePicture] = useState<string>("");
@@ -57,7 +57,7 @@ const Signup = () => {
     }
 
     try {
-      const res = await fetch("/api/signupw", {
+      const res = await fetch("/api/part2", {
         method: "POST",
 
         body: JSON.stringify({
@@ -89,52 +89,6 @@ const Signup = () => {
       console.log(error);
     }
   };
-
-  // const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-  //   e.preventDefault();
-  //   if (userCredentials) {
-  //     const { password } = userCredentials;
-  //     if (password?.length < 2 || password?.length > 10) {
-  //       alert("check your password again");
-  //     }
-
-  //     const body = JSON.stringify(userCredentials);
-  // const myHeaders = new Headers();
-  // myHeaders.append("Content-Type", "application/x-www-form-urlencoded");
-  // const urlencoded = new URLSearchParams();
-  // urlencoded.append("email", userCredentials?.email);
-  // urlencoded.append("password", userCredentials.password);
-  // urlencoded.append("username", userCredentials?.userName);
-  // urlencoded.append(
-  //   "userpicture",
-  //   userCredentials?.userPicture
-
-  //     : "https://img.freepik.com/premium-vector/anonymous-user-circle-icon-vector-illustration-flat-style-with-long-shadow_520826-1931.jpg"
-  // );
-  // urlencoded.append(
-  //   "public_id",
-  //   userCredentials?.public_id ? userCredentials.public_id : ""
-  // );
-
-  //     const requestOptions = {
-  //       method: "POST",
-  //       body: body,
-  //     };
-  //     try {
-  //       const response = await fetch(
-  //         "http://localhost:3000/api/signup",
-  //         requestOptions
-  //       );
-  //       console.log("response of signup", response);
-  //       const result = await response.json();
-  //       console.log("result for signup", result);
-  //     } catch (error) {
-  //       console.log("error signing up a userrr", error);
-  //     }
-  //   } else {
-  //     console.log("enter required fields first");
-  //   }
-  // };
 
   if (sessionStatus === "loading") {
     return <h1>Loading...</h1>;
@@ -216,4 +170,4 @@ const Signup = () => {
   );
 };
 
-export default Signup;
+export default part2;

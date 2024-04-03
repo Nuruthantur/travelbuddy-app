@@ -16,7 +16,7 @@ const UsersSC = async (props: Props) => {
         {users.map((user) => {
           return (
             <>
-              <div key={user._id.toString()}>
+              <div key={user._id.toString()} className="text-black">
                 <li>{user.firstName}</li>
                 <li>{user.lastName}</li>
                 <li>{user.email}</li>

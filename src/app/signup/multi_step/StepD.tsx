@@ -1,44 +1,56 @@
 import React from "react";
 
-function StepD({
+function StepC({
   formData,
   handleChangeInput,
   handlePrevStep,
-  handleSubmitFormData,
+  handleNextStep,
 }: {
   formData: any;
   handleChangeInput: any;
   handlePrevStep: any;
-  handleSubmitFormData: any;
+  handleNextStep: any;
 }) {
   return (
     <div>
       <h1 className="m-2 pt-4 text-xl font-bold text-blue-900 text-center">
-        CONFIRM INFORMATION
+        ADDITIONAL INFORMATION
       </h1>
-      <div className="m-2 mt-4">
-        <DataConfirm label="Username" value={formData.userName} />
-        <DataConfirm label="Email" value={formData.email} />
-        <DataConfirm label="First Name" value={formData.firstName} />
-        <DataConfirm label="Last Name" value={formData.lastName} />
-        <DataConfirm label="Birth Date" value={formData.birthDate} />
-        <DataConfirm label="Traveling Dates" value={formData.travelingDates} />
-        <DataConfirm
-          label="Traveling Destinations"
-          value={formData.travelingDestinations}
+      <div className="m-2 mt-4 text-black text-lg">
+        <label>Traveling Dates</label>
+
+        <input
+          type="date"
+          name="travelingDates"
+          value={formData.travelingDates}
+          onChange={(e) => handleChangeInput(e)}
+          className="w-full mb-3 mr-1 outline-none bg-white border border-grey-400 px-2 py-1 rounded-lg focus:border-blue-600"
         />
-        <DataConfirm label="Hobbies" value={formData.hobbies} />
-        <DataConfirm label="About Yourself" value={formData.aboutYourself} />
-        <div className="my-3 ml-1 flex items-center font-bold">
-          <input
-            type="checkbox"
-            name="agreeToTerms"
-            value={formData.agreeToTerms}
-            onChange={(e) => handleChangeInput(e)}
-            className="w-4 h-4 mr-2 "
-          />
-          <label className="text-base">I agree to terms and conditions</label>
-        </div>
+
+        <label>Traveling Destinations</label>
+        <input
+          type="text"
+          name="travelingDestinations"
+          value={formData.travelingDestinations}
+          onChange={(e) => handleChangeInput(e)}
+          className="w-full mb-3 outline-none bg-white border border-grey-400 px-2 py-1 rounded-lg focus:border-blue-600"
+        />
+        <label className="mt-3">Hobbies</label>
+        <input
+          type="text"
+          name="hobbies"
+          value={formData.hobbies}
+          onChange={(e) => handleChangeInput(e)}
+          className="w-full mb-3 outline-none bg-white border border-grey-400 px-2 py-1 rounded-lg focus:border-blue-600"
+        />
+        <label className="mt-3">About Yourself</label>
+        <input
+          type="text"
+          name="aboutYourself"
+          value={formData.aboutYourself}
+          onChange={(e) => handleChangeInput(e)}
+          className="w-full rows-2 mb-3 outline-none bg-white border border-grey-400 px-2 py-1 rounded-lg focus:border-blue-600"
+        />
       </div>
       <div className="m-2 mt-6 flex btn-xs text-lg font-bold justify-between items-center">
         <button
@@ -48,23 +60,14 @@ function StepD({
           Prev
         </button>
         <button
-          className="bg-blue-400 px-4 py-2 border-2 rounded-xl"
-          onClick={handleSubmitFormData}
+          className="bg-indigo-400 px-4 py-2 rounded-xl"
+          onClick={handleNextStep}
         >
-          Signup
+          Next
         </button>
       </div>
     </div>
   );
 }
 
-export default StepD;
-
-const DataConfirm = ({ label, value }: { label: any; value: any }) => {
-  return (
-    <div className="my-3 text-base font-bold border border-dashed border-gray-200 rounded-lg">
-      <span className="mr-4 p-2 text-slate-800">{label}</span>
-      <span className="mr-4 text-slate-500 text-white">{value}</span>
-    </div>
-  );
-};
+export default StepC;

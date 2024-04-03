@@ -4,10 +4,12 @@ import { redirect } from "next/navigation";
 
 const Dashboard = async () => {
   const session = await getServerSession(); //in server component
+
   if (!session) {
-    redirect("/");
+    return redirect("/");
   }
-  return <div>dashboard</div>;
+
+  return <div className="text-black">dashboard</div>;
 };
 
 export default Dashboard;

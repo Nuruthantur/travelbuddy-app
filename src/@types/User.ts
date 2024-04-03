@@ -11,7 +11,7 @@ export default interface User {
   requests?: string;
   connections?: string;
   hometown?: string;
-  aboutYourself?: string;
+  aboutYourSelf?: string;
   travelingDates?: string;
   travelingDestinations?: string;
   agreeToTerms?: boolean;

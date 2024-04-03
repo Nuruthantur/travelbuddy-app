@@ -3,9 +3,13 @@ const typeDefs = `#graphql
     id: ID!
     email: String!
     userName: String!
-    password: String!
     firstName: String
     lastName: String
+    birthDate: String
+    travelingDates: String
+    travelingDestinations: String
+    hobbies: String
+    aboutYourSelf: String
     hometown: String
   }
 
@@ -37,25 +41,25 @@ const typeDefs = `#graphql
   # travelingDestinations: String
   # }
   
-  input updateUserInformation {
-  firstName: String
-  lastName: String
-  birthDate: String
-  hometown: String
-  travelingDates: String
-  travelingDestinations: String
-  }
+
   
   type Mutation {
-    updateUserInformation(id: ID!, input: updateUserInformation!): User
+    updateUserInformation(id: ID!, input: UpdateUserInformation!): User
     updateUserTravelingDates(id: ID!, travelingDates: String): successMessage
     signup(input: NewUserInput!): User
     login(email: String!, password: String!): User
     logout: successMessage
     deleteUser(id: ID!): successMessage
-    completeUserSignup(input: updateUser!): User
+    # completeUserSignup(input: updateUser!): User
     
   }
+
+  input UpdateUserInformation {
+
+firstName: String
+lastName: String
+
+}
 `;
 
 export default typeDefs;
