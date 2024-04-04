@@ -12,8 +12,6 @@ export default function TestPage() {
       {/* works - so far */}
       {/* <UsersSC /> */}
 
-      {/* <LoginFormTest /> */}
-
       {/* not working */}
       {/* <UserCardCC /> */}
 

@@ -17,12 +17,14 @@ const server = new ApolloServer<MyContext>({
 });
 
 const handler = startServerAndCreateNextHandler(server, {
-  context: async ({}) => {
-    const currentSession = await getServerSession();
+  context: async (req, res) => {
+    const session = await getServerSession();
+    console.log("req, res", req, res);
+    console.log("current session: ", session?.user?.email);
     // const token = req.headers.authorization || '';
     // try to retrieve a user with the token
 
-    return { session: currentSession };
+    return { session: session };
   },
 });
 console.log("🚀 Server listening at: ", handler);

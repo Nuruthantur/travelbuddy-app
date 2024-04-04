@@ -11,7 +11,6 @@ const Dashboard = async () => {
   if (!session) {
     redirect("/login");
   }
-  // console.log(session);
 
   await dbConnect();
   // in the find() do logic to not get me and user that are not liked yet
