@@ -38,9 +38,6 @@ const Signup = () => {
     const password = e.target[1].value;
     const userName = e.target[2].value;
     const userPicture = userCredentials?.userPicture;
-    // const userPicture = profilePicture
-    //   ? (await uploadImage(profilePicture)).secure_url
-    //   : "";
 
     if (!isValidEmail(email)) {
       setError("Email is invalid");

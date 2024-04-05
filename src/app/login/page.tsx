@@ -177,7 +177,10 @@ const Login = () => {
             </button>
             <p className="mt-10 text-center text-sm text-gray-500">
               Not a member?{" "}
-              <a href="#" className="font-semibold leading-6 text-slate-950 ">
+              <a
+                href="/signup"
+                className="font-semibold leading-6 text-slate-950 "
+              >
                 <b>Sign Up</b>
               </a>
             </p>

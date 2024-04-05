@@ -11,7 +11,8 @@ import {
 function makeClient() {
   const httpLink = new HttpLink({
     // https://studio.apollographql.com/public/spacex-l4uc6p/
-    uri: "/graphql",
+    uri: "/api/graphql",
+    credentials: "include",
   });
 
   return new NextSSRApolloClient({
