@@ -32,9 +32,9 @@ const typeDefs = `#graphql
   }
 
   input NewUserInput {
-    email: String!
-    userName: String!
-    password: String!
+    email: String
+    userName: String
+    password: String
   }
 
   input updateUser {

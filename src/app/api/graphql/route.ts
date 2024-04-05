@@ -4,17 +4,19 @@ import { ApolloServer } from "@apollo/server";
 import resolvers from "./resolvers";
 import typeDefs from "./typeDefs";
 
-import { GraphQLError } from "graphql";
-import { Session, getServerSession } from "next-auth";
+import { authOptions } from "../auth/[...nextauth]/route";
+import { getServerSession } from "next-auth";
 
 export type MyContext = {
-  session: Session | null;
+  session: any;
 };
 
 const server = new ApolloServer<MyContext>({
   resolvers,
   typeDefs,
 });
+
+const res = { getHeader() {}, setCookie() {}, setHeader() {} };
 
 const handler = startServerAndCreateNextHandler(server, {
   context: async (req, res) => {

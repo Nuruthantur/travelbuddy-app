@@ -6,6 +6,7 @@ import { CiHome } from "react-icons/ci";
 import { CiHeart } from "react-icons/ci";
 import { RiUserAddLine } from "react-icons/ri";
 import { signOut, useSession } from "next-auth/react";
+import { sign } from "crypto";
 
 const Navbar = () => {
   const [showUserDropdown, setShowUserDropdown] = useState(false);

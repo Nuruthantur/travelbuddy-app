@@ -5,7 +5,7 @@ import dbConnect from "@/utils/dbConnect";
 import Card from "@/components/Card";
 import User from "@/@types/User";
 import UserModel from "@/models/User";
-
+import Navbar from "@/components/Navbar";
 const Dashboard = async () => {
   const session = await getServerSession(); //in server component
   if (!session) {
