@@ -23,19 +23,19 @@ const typeDefs = `#graphql
   }
 
   input NewUserInput {
-    email: String!
-    userName: String!
-    password: String!
+    email: String
+    userName: String
+    password: String
   }
 
-  # input updateUser {
-  # firstName: String
-  # lastName: String
-  # birthDate: String
-  # hometown: String
-  # travelingDates: String
-  # travelingDestinations: String
-  # }
+  input updateUser {
+  firstName: String
+  lastName: String
+  birthDate: String
+  hometown: String
+  travelingDates: String
+  travelingDestinations: String
+  }
   
   input updateUserInformation {
   firstName: String

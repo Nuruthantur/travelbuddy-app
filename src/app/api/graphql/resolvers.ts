@@ -12,7 +12,6 @@ type param = {
   };
 };
 
-
 type updateUserInformation = {
   id: string;
   userName: string;

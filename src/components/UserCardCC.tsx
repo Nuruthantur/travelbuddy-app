@@ -15,8 +15,8 @@ const GET_ALL_USERS = gql`
     }
   }
 `;
-async function UserCardCC({ onUserSelect }: any) {
-  await dbConnect();
+function UserCardCC({ onUserSelect }: any) {
+  dbConnect();
   const { loading, error, data } = useQuery(GET_ALL_USERS);
   console.log(loading, error, data);
   const users = data?.getAllUsers.users;
