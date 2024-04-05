@@ -1,8 +1,9 @@
-// import LoginFormTest from "@/components/LoginFormTest";
+// // import LoginFormTest from "@/components/LoginFormTest";
 import UserCardCC from "@/components/UserCardCC";
 import UserCardSC from "@/components/userCardSC";
 import UsersSC from "@/components/usersSC";
-import TestComponent from "../../components/testComponentCC";
+import TestComponent from "@/components/testComponentCC";
+import UpdateProfile from "@/components/UpdateProfileCC";
 import Card1 from "@/components/Card";
 
 export default function TestPage() {
@@ -16,7 +17,10 @@ export default function TestPage() {
       {/* <UserCardCC /> */}
 
       {/* not working */}
-      <UserCardSC searchParams={{}} />
+      {/* <UserCardSC searchParams={{}} /> */}
+      <TestComponent />
+      {/* <UsersSC /> */}
+      {/* <UpdateProfile /> */}
 
       {/* working tinder cards but not able to get data from api */}
       {/* <Card1 searchParams={{}} /> */}

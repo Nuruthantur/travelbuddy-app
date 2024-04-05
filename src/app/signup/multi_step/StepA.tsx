@@ -10,7 +10,7 @@ function StepA({
   handleNextStep: any;
 }) {
   return (
-    <div>
+    <div className="flex flex-col">
       <h1 className="m-2 pt-4 text-xl font-bold text-white font-outline-4 text-center">
         SIGNUP INFO
       </h1>

@@ -13,12 +13,17 @@ type param = {
 };
 
 type updateUserInformation = {
+  input: any;
   id: string;
   userName: string;
   email: string;
   firstName: string;
   lastName: string;
   hometown: string;
+  birthDate: Date;
+  aboutYourSelf: string;
+  travelingDates: string;
+  travelingDestinations: string;
 };
 type updateUserTravelingDates = {
   travelingDates?: string;
@@ -26,13 +31,15 @@ type updateUserTravelingDates = {
 
 const resolvers = {
   Query: {
-    getAllUsers: async () => {
+    getAllUsers: async (_: any, __: any, context: any) => {
+      console.log("context :>> ", context);
       try {
         await dbConnect();
         const users = await UserModel.find({});
         return users;
       } catch (error) {
         console.log(error);
+        throw new Error("Failed to fetch users");
       }
     },
     users: async (parent: any, args: any, contextValue: MyContext) => {
@@ -40,7 +47,12 @@ const resolvers = {
       // if (!contextValue.session || !contextValue.session.roles.includes('premiumUser')) return null;
       // return contextValue.models.User.getAll();
     },
-    getUsersById: async () => {},
+    getUsersById: async (parent: any, args: { id: any }, contextValue: any) => {
+      console.log("params :>> ", args);
+      const user = UserModel.findById(args.id);
+      console.log("user :>> ", user);
+      return user;
+    },
     testFunction: async (_: any, args: any, context: any) => {
       console.log(context);
       const { session } = context;
@@ -57,49 +69,44 @@ const resolvers = {
       // const user = await UserModel.findById({});
       // return user;
     },
-    // find one user by id
-    user: async (parent: any, args: param) => {
-      try {
-        await dbConnect();
-        const user = await UserModel.findById({});
-        return user;
-      } catch (error) {
-        console.log(error);
-      }
-    },
   },
   Mutation: {
     updateUserInformation: async (
       _: undefined,
-      params: updateUserInformation,
-      contextValue: MyContext
+      params: updateUserInformation
+      // contextValue: MyContext
     ) => {
-      try {
-        if (!contextValue.session) {
-          return new GraphQLError("User is not authenticated to do that", {
-            extensions: {
-              code: "UNAUTHENTICATED",
-              http: { status: 401 },
-            },
-          });
-        }
-        await dbConnect();
-        const updatedUser = await UserModel.findByIdAndUpdate(
-          // TODO - do this with the token and not the id (or get the session of a user from next auth)
-          params.id,
-          {
-            email: params.email,
-            firstName: params.firstName,
-            lastName: params.lastName,
+      console.log("params :>> ", params);
+      // try {
+      //   if (!contextValue.session) {
+      //     return new GraphQLError("User is not authenticated to do that", {
+      //       extensions: {
+      //         code: "UNAUTHENTICATED",
+      //         http: { status: 401 },
+      //       },
+      //     });
+      //   }
+      console.log("params.email :>> ", params.email);
+      await dbConnect();
+      const updatedUser = await UserModel.update({
+        email: params.email,
+      })(
+        // TODO - do this with the token and not the id (or get the session of a user from next auth)
+        {
+          $set: {
+            firstName: params.input.firstName,
+            lastName: params.input.lastName,
           },
-          { new: true }
-        );
-        return updatedUser;
-        // if you want to check with message also change in the typeDefs to message instead of :User
-        // return { message: "User Information updated" };
-      } catch (error) {
-        console.log(error);
-      }
+        },
+        { new: true }
+      );
+      console.log("updatedUser :>> ", updatedUser);
+      return updatedUser;
+      // if you want to check with message also change in the typeDefs to message instead of :User
+      // return { message: "User Information updated" };
+      // } catch (error) {
+      //   console.log(error);
+      // }
     },
     updateUserTravelingDates: async (
       _: undefined,
@@ -145,10 +152,10 @@ const resolvers = {
         console.log(error);
       }
     },
-    deleteUser: async (_: undefined, args: any) => {
+    deleteUser: async (_: undefined, params: any, context: any) => {
       await dbConnect();
-      const deletedUser = await UserModel.findByIdAndDelete(args.id);
-      return { message: `User ${deletedUser?.name} has been removed` };
+      const deletedUser = await UserModel.findOneAndDelete(params.email);
+      return { message: `User ${deletedUser?.email} has been removed` };
       // return deletedUser;
       // search for messages of this user and delete them
     },

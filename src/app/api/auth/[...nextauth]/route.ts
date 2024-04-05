@@ -20,6 +20,7 @@ export const authOptions: any = {
 
         try {
           const user = await UserModel.findOne({ email: credentials.email });
+
           if (user) {
             const isPasswordCorrect = await bcrypt.compare(
               credentials.password,
@@ -56,10 +57,10 @@ export const authOptions: any = {
       profile: GoogleProfile;
     }) {
       console.log("profile :>> ", profile);
-      if (account?.provider == "credentials") {
+      if (account?.provider === "credentials") {
         return true; //return true after the completion of the signup process.
       }
-      if (account?.provider == "google") {
+      if (account?.provider === "google") {
         await dbConnect(); //connecting to the database
         try {
           const existingUser = await UserModel.findOne({ email: user.email });
@@ -83,5 +84,6 @@ export const authOptions: any = {
   },
 };
 
+// export default NextAuth(authOptions);
 export const handler = NextAuth(authOptions);
 export { handler as GET, handler as POST }; //how we configure next auth config file with next js

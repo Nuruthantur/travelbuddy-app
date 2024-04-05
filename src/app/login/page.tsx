@@ -4,14 +4,16 @@ import Image from "next/image";
 import image from "../../img/background.png";
 import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
+
 import { signIn, useSession } from "next-auth/react";
 
 const Login = () => {
   const router = useRouter();
   const [error, setError] = useState("");
-  // const session = useSession();
+
   const { data: session, status: sessionStatus } = useSession();
 
+  console.log("session session login :>> ", session, sessionStatus);
   useEffect(() => {
     if (sessionStatus === "authenticated") {
       router.replace("/");

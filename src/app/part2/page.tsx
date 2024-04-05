@@ -1,12 +1,11 @@
 "use client";
 import User from "@/@types/User";
-import ImageInput from "@/components/ImageInput";
 import { signIn, useSession } from "next-auth/react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import React, { ChangeEvent, useEffect, useState } from "react";
 
-const Signup = () => {
+const part2 = () => {
   const [error, setError] = useState("");
   const [userCredentials, setUserCredentials] = useState<User | null>(null);
   const [profilePicture, setProfilePicture] = useState<string>("");
@@ -38,6 +37,9 @@ const Signup = () => {
     const password = e.target[1].value;
     const userName = e.target[2].value;
     const userPicture = userCredentials?.userPicture;
+    // const userPicture = profilePicture
+    //   ? (await uploadImage(profilePicture)).secure_url
+    //   : "";
 
     if (!isValidEmail(email)) {
       setError("Email is invalid");
@@ -54,7 +56,7 @@ const Signup = () => {
     }
 
     try {
-      const res = await fetch("/api/signupw", {
+      const res = await fetch("/api/part2", {
         method: "POST",
 
         body: JSON.stringify({
@@ -118,7 +120,6 @@ const Signup = () => {
               onChange={handleInputCredentialsChange}
               required
             />
-            <ImageInput state={profilePicture} setState={setProfilePicture} />
 
             <div style={{ marginTop: "20px" }}>
               {profilePicture ? (
@@ -127,7 +128,6 @@ const Signup = () => {
                   style={{
                     width: "100px",
                     height: "100px",
-                    borderRadius: "50%",
                   }}
                   src={profilePicture}
                   alt="Profile"
@@ -167,4 +167,4 @@ const Signup = () => {
   );
 };
 
-export default Signup;
+export default part2;
