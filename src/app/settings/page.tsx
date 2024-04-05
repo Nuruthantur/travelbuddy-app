@@ -1,36 +1,43 @@
 "use client";
 
+import userEmail from "@/components/getMe";
+import getMe from "@/components/getMe";
+// import getMe from "@/components/getMe";
 import { gql, useMutation } from "@apollo/client";
 import { UserCircleIcon } from "@heroicons/react/24/solid";
-import { getServerSession } from "next-auth";
+import { signOut, useSession } from "next-auth/react";
 import Link from "next/link";
 import React from "react";
+import { getServerSession } from "next-auth";
 
 const DELETE_USER = gql`
-  mutation DeleteUser($id: ID!) {
-    deleteUser(id: $id) {
+  mutation DeleteUser($email: String!) {
+    deleteUser(email: $email) {
       message
+      user {
+        id
+      }
     }
   }
 `;
 
-const page = async ({ userId }) => {
-  const session = getServerSession();
-  // console.log("session settings :>> ", session);
-  const [deleteUser] = useMutation(DELETE_USER);
-  const handleDeleteUser = async () => {
-    try {
-      const { data } = await deleteUser({
-        variables: { id: userId },
-      });
-      alert(data.deleteUser.message);
-      // Handle any other logic after deletion if needed
-    } catch (error) {
-      // Handle errors if any
-      console.error("Error deleting user:", error);
-    }
+function page() {
+  const session = useSession();
+  console.log("session helen :>> ", session);
+  const email = session?.data?.user?.email;
+  console.log("email :>> ", email);
+  const handleLogOut = () => {
+    signOut();
   };
-  console.log("userEmail :>> ", userId);
+  const [deleteUserss, { loading, error, data }] = useMutation(DELETE_USER);
+  const handleDeleteUser = () => {
+    deleteUserss({
+      variables: {
+        email: email,
+      },
+    });
+    signOut();
+  };
   return (
     <div className="col-span-full">
       <h2 className="text-2xl text-center mt-7 p-1 font-semibold leading-7 text-gray-900 bg-white">
@@ -70,8 +77,11 @@ const page = async ({ userId }) => {
       </div>
       <div className="flex flex-col static">
         <div className="flex flex-col absolute bottom-0 w-full">
-          <button className="btn btn-active btn-primary mt-6 ml-2 mr-2 text-base font-semibold">
-            SIGN OUT
+          <button
+            onClick={handleLogOut}
+            className="btn btn-active btn-primary mt-6 ml-2 mr-2 text-base font-semibold"
+          >
+            LOG OUT
           </button>
           <button
             onClick={handleDeleteUser}
@@ -83,6 +93,5 @@ const page = async ({ userId }) => {
       </div>
     </div>
   );
-};
-
+}
 export default page;

@@ -41,15 +41,20 @@ const typeDefs = `#graphql
   # travelingDestinations: String
   # }
   
+  type DeleteUser {
+    message: String!
+    user: User
+  }
+  
 
   
   type Mutation {
-    updateUserInformation(id: ID!, input: UpdateUserInformation!): User
+    updateUserInformation(email: String!, input: UpdateUserInformation!): User
     updateUserTravelingDates(id: ID!, travelingDates: String): successMessage
     signup(input: NewUserInput!): User
     login(email: String!, password: String!): User
     logout: successMessage
-    deleteUser(id: ID!): successMessage
+    deleteUser(email: String!): DeleteUser!
     # completeUserSignup(input: updateUser!): User
     
   }

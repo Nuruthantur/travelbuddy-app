@@ -47,7 +47,7 @@ const resolvers = {
       // if (!contextValue.session || !contextValue.session.roles.includes('admin')) return null;
       // return contextValue.models.User.getAll();
     },
-    getUsersById: async (parent: any, args: { id: any; }, contextValue: any) => {
+    getUsersById: async (parent: any, args: { id: any }, contextValue: any) => {
       console.log("params :>> ", args);
       const user = UserModel.findById(args.id);
       console.log("user :>> ", user);
@@ -86,10 +86,12 @@ const resolvers = {
       //       },
       //     });
       //   }
+      console.log("params.email :>> ", params.email);
       await dbConnect();
-      const updatedUser = await UserModel.findByIdAndUpdate(
+      const updatedUser = await UserModel.update({
+        email: params.email,
+      })(
         // TODO - do this with the token and not the id (or get the session of a user from next auth)
-        params.id,
         {
           $set: {
             firstName: params.input.firstName,
@@ -98,7 +100,6 @@ const resolvers = {
         },
         { new: true }
       );
-      console.log("params.id :>> ", params.id);
       console.log("updatedUser :>> ", updatedUser);
       return updatedUser;
       // if you want to check with message also change in the typeDefs to message instead of :User
@@ -151,10 +152,10 @@ const resolvers = {
         console.log(error);
       }
     },
-    deleteUser: async (_: undefined, args: any) => {
+    deleteUser: async (_: undefined, params: any, context: any) => {
       await dbConnect();
-      const deletedUser = await UserModel.findByIdAndDelete(args.id);
-      return { message: `User ${deletedUser?.name} has been removed` };
+      const deletedUser = await UserModel.findOneAndDelete(params.email);
+      return { message: `User ${deletedUser?.email} has been removed` };
       // return deletedUser;
     },
   },
