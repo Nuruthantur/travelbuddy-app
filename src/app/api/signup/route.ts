@@ -14,6 +14,7 @@ const POST = async (request: NextRequest) => {
   if (existingUser) {
     console.log("existingUser :>> ", existingUser);
     return NextResponse.json("Email already registered", {
+    return NextResponse.json("Email already registered", {
       status: 400,
     });
   }
@@ -44,6 +45,7 @@ const POST = async (request: NextRequest) => {
   console.log("newUser :>> ", newUser);
   try {
     await newUser.save();
+    return NextResponse.json("user is registered", {
     return NextResponse.json("user is registered", {
       status: 200,
     });

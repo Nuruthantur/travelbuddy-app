@@ -5,7 +5,6 @@ import CredentialsProvider from "next-auth/providers/credentials";
 import bcrypt from "bcryptjs";
 import UserModel from "@/models/User";
 import dbConnect from "@/utils/dbConnect";
-
 export const authOptions: any = {
   providers: [
     CredentialsProvider({
@@ -44,6 +43,10 @@ export const authOptions: any = {
     }),
   ],
   callbacks: {
+    async session(param: any) {
+      console.log("param", param);
+      return param.session;
+    },
     async signIn({
       user,
       account,

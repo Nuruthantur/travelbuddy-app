@@ -27,7 +27,9 @@ let UserModel: any;
 
 try {
   UserModel = mongoose.model("user");
+  UserModel = mongoose.model("user");
 } catch {
+  UserModel = mongoose.model("user", userSchema);
   UserModel = mongoose.model("user", userSchema);
 }
 // try {

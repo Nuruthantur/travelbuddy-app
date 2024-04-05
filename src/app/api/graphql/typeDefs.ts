@@ -1,7 +1,6 @@
 const typeDefs = `#graphql
   type User {
     id: ID!
-    email: String!
     userName: String!
     firstName: String
     lastName: String
@@ -11,6 +10,15 @@ const typeDefs = `#graphql
     hobbies: String
     aboutYourSelf: String
     hometown: String
+    birthDate: String
+    public_id: String
+    likes: String
+    requests: String
+    connections: String
+    aboutYourself: String
+    travelingDates: String
+    travelingDestinations: String
+    userPicture: String
   }
 
   type successMessage{
@@ -27,9 +35,9 @@ const typeDefs = `#graphql
   }
 
   input NewUserInput {
-    email: String!
-    userName: String!
-    password: String!
+    email: String
+    userName: String
+    password: String
   }
 
   # input updateUser {

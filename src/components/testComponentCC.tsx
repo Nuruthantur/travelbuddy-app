@@ -1,4 +1,5 @@
 "use client";
+import User from "@/@types/User";
 import { gql, useQuery } from "@apollo/client";
 import {
   Key,

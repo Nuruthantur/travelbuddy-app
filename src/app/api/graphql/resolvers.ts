@@ -44,7 +44,7 @@ const resolvers = {
     },
     users: async (parent: any, args: any, contextValue: MyContext) => {
       await dbConnect();
-      // if (!contextValue.session || !contextValue.session.roles.includes('admin')) return null;
+      // if (!contextValue.session || !contextValue.session.roles.includes('premiumUser')) return null;
       // return contextValue.models.User.getAll();
     },
     getUsersById: async (parent: any, args: { id: any }, contextValue: any) => {
@@ -157,6 +157,7 @@ const resolvers = {
       const deletedUser = await UserModel.findOneAndDelete(params.email);
       return { message: `User ${deletedUser?.email} has been removed` };
       // return deletedUser;
+      // search for messages of this user and delete them
     },
   },
 };
