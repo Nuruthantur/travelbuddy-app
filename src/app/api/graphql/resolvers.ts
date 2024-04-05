@@ -13,6 +13,7 @@ type param = {
 };
 
 type updateUserInformation = {
+  input: any;
   id: string;
   userName: string;
   email: string;
@@ -30,7 +31,7 @@ type updateUserTravelingDates = {
 
 const resolvers = {
   Query: {
-    getAllUsers: async (_, __, context) => {
+    getAllUsers: async (_: any, __: any, context: any) => {
       console.log("context :>> ", context);
       try {
         await dbConnect();
@@ -46,7 +47,12 @@ const resolvers = {
       // if (!contextValue.session || !contextValue.session.roles.includes('admin')) return null;
       // return contextValue.models.User.getAll();
     },
-    getUsersById: async () => {},
+    getUsersById: async (parent: any, args: { id: any; }, contextValue: any) => {
+      console.log("params :>> ", args);
+      const user = UserModel.findById(args.id);
+      console.log("user :>> ", user);
+      return user;
+    },
     testFunction: async (_: any, args: any, context: any) => {
       console.log(context);
       const { session } = context;

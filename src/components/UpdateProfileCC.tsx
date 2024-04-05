@@ -23,6 +23,8 @@ const UPDATE_USER = gql`
     }
   }
 `;
+
+
 export default function UpdateProfile() {
   const [updateUser, { loading, error, data }] = useMutation(UPDATE_USER);
   console.log("data :>> ", data);
@@ -44,7 +46,7 @@ export default function UpdateProfile() {
       <button onClick={handleChangeUser} className="text-black">
         Update User
       </button>
-      {data?.updatedUser.map((user: User) => {
+      {/* {data?.updatedUser.map((user: User) => {
         return (
           <>
             <div key={user._id}>
@@ -60,7 +62,7 @@ export default function UpdateProfile() {
             </div>
           </>
         );
-      })}
+      })} */}
       <form onSubmit={submitInputs}>
         <div className="col-span-full">
           <div className="text-center bg-zinc-200 p-4  border-b-4 border-white">

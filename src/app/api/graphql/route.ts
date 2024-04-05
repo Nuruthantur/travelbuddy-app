@@ -9,14 +9,11 @@ import { Session, getServerSession } from "next-auth";
 import { authOptions } from "../auth/[...nextauth]/route";
 import { NextRequest } from "next/server";
 
-// export type MyContext = {
-//   session: Session | null;
-// };
-// const server = new ApolloServer<MyContext>({
-//   resolvers,
-//   typeDefs,
-// });
-const server = new ApolloServer({
+export type MyContext = {
+  session: Session | null;
+};
+
+const server = new ApolloServer<MyContext>({
   resolvers,
   typeDefs,
 });
@@ -34,10 +31,29 @@ const server = new ApolloServer({
 //     return { session: currentSession };
 //   },
 // });
-const handler = startServerAndCreateNextHandler<NextRequest>(server, {
-  context: async (req, res) => {({ req, res, user: { name: "asdasd" } })},
+const handler = startServerAndCreateNextHandler(server, {
+  context: async (req, res) => {
+    console.log("req :>> ", req);
+
+    const session = await getServerSession();
+    // const session = await getServerSession(req, res, authOptions);
+    // console.log("session :>> ", session);
+    // return { session: null };
+
+    console.log("session okej:>> ", session);
+    return { session: session };
+  },
 });
 
 console.log("🚀 Server listening at: ", handler);
 
 export { handler as GET, handler as POST };
+// export function GET(req: NextRequest) {
+//   console.log("req.cookies GET :>> ", req.cookies);
+//   return handler(req);
+// }
+
+// export function POST(req: NextRequest) {
+//   console.log("req.cookies POST :>> ", req.cookies);
+//   return handler(req);
+// }

@@ -4,6 +4,7 @@ import { redirect } from "next/navigation";
 
 const Dashboard = async () => {
   const session = await getServerSession(); //in server component
+  // console.log("session dash :>> ", session);
 
   if (!session) {
     return redirect("/");

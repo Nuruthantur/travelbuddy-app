@@ -1,6 +1,5 @@
 "use client";
 import User from "@/@types/User";
-import ImageInput from "@/components/ImageInput";
 import { signIn, useSession } from "next-auth/react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -121,7 +120,6 @@ const part2 = () => {
               onChange={handleInputCredentialsChange}
               required
             />
-            <ImageInput state={profilePicture} setState={setProfilePicture} />
 
             <div style={{ marginTop: "20px" }}>
               {profilePicture ? (
@@ -130,7 +128,6 @@ const part2 = () => {
                   style={{
                     width: "100px",
                     height: "100px",
-                    borderRadius: "50%",
                   }}
                   src={profilePicture}
                   alt="Profile"

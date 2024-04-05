@@ -2,8 +2,8 @@ import dbConnect from "@/utils/dbConnect";
 import UserModel from "@/models/User";
 import bcrypt from "bcryptjs";
 import { v2 as cloudinary } from "cloudinary";
-
 import { NextRequest, NextResponse } from "next/server";
+import { uploadImage } from "@/config/cloudinary";
 
 const POST = async (request: NextRequest) => {
   // const { email, password, userName } = await request.json();
@@ -18,12 +18,28 @@ const POST = async (request: NextRequest) => {
     });
   }
 
+  console.log("values.email :>> ", values.email);
+  console.log("values.userPicture :>> ", values.userPicture);
+
+  const cloudPicture = values.userPicture
+    ? await uploadImage(values.userPicture)
+    : "";
+  let userImage;
+  console.log("cloudPicture :>> ", cloudPicture);
+  if (cloudPicture) {
+    userImage = cloudPicture.secure_url;
+  } else {
+    userImage =
+      "https://img.freepik.com/premium-vector/anonymous-user-circle-icon-vector-illustration-flat-style-with-long-shadow_520826-1931.jpg";
+  }
+
   const hashedPassword = await bcrypt.hash(values.password, 5);
   console.log("hashedPassword :>> ", hashedPassword);
   const newUser = new UserModel({
     ...values,
     password: hashedPassword,
     authType: "credentials",
+    userPicture: userImage,
   });
   console.log("newUser :>> ", newUser);
   try {
@@ -36,41 +52,6 @@ const POST = async (request: NextRequest) => {
     return NextResponse.json(error.message, {
       status: 500,
     });
-  }
-};
-
-const uploadPicture = async (req: any, res: any) => {
-  console.log("req", req.file);
-  if (!req.file) {
-    console.log("file format not supported.");
-    res.status(500).json({ message: "file not supported" });
-  }
-  if (req.file) {
-    //Upload a picture
-    try {
-      const pictureUpload = await cloudinary.uploader.upload(req.file.path, {
-        folder: "userProfiles",
-        transformation: [{ width: 400, height: 400, crop: "fill" }],
-      });
-      console.log("picture upload", pictureUpload);
-
-      res.status(201).json({
-        message: "file uploaded successfully",
-        error: false,
-        data: {
-          imageUrl: pictureUpload.secure_url,
-          public_id: pictureUpload.public_id,
-        },
-      });
-      // console.log("publicccc iddd", public_id);
-    } catch (error) {
-      console.log("error on pictureUpload", error);
-      res.status(500).json({
-        message: "file not uploaded",
-        error: true,
-        data: null,
-      });
-    }
   }
 };
 

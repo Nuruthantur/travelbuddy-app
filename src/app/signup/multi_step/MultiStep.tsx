@@ -40,9 +40,13 @@ const initialFormData: newUserValues = {
 
 interface MultiStepType {
   user: User | null;
+  profilePicture: string;
+  setProfilePicture: React.Dispatch<React.SetStateAction<string>>;
 }
 const defaultValue: MultiStepType = {
   user: null,
+  profilePicture: "",
+  setProfilePicture: () => {},
 };
 
 const stepsArray = ["1", "2", "3", "4", "5"];
@@ -56,7 +60,6 @@ const MultiStep = ({
 }) => {
   const [step, setStep] = useState("1");
   const [formData, setFormData] = useState(initialFormData);
-  // const [user, setUser] = (useState < User) | null(null);
 
   const handleNextStep = () => {
     if (step === "1") setStep("2");
@@ -82,7 +85,7 @@ const MultiStep = ({
     } else {
       fieldValue = event.target.value;
     }
-  setFormData({ ...formData, [fieldName]: fieldValue });
+    setFormData({ ...formData, [fieldName]: fieldValue });
   };
 
   const handleSubmitFormData = () => {
@@ -122,7 +125,6 @@ const MultiStep = ({
   return (
     <div className="mt-6">
       {renderTopStepNumbers()}
-
       {step === "1" ? (
         <StepA
           formData={formData}
@@ -146,7 +148,6 @@ const MultiStep = ({
           handleNextStep={handleNextStep}
         />
       ) : null}
-
       {step === "4" ? (
         <StepD
           formData={formData}
@@ -155,7 +156,6 @@ const MultiStep = ({
           handleNextStep={handleNextStep}
         />
       ) : null}
-
       {step === "5" ? (
         <StepE
           formData={formData}

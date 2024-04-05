@@ -56,8 +56,8 @@ const typeDefs = `#graphql
 
   input UpdateUserInformation {
 
-firstName: String
-lastName: String
+    firstName: String
+    lastName: String
 
 }
 `;

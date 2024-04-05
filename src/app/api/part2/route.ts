@@ -1,6 +1,6 @@
 import { uploadImage } from "@/config/cloudinary";
 import UserModel from "@/models/User";
-import connect from "@/utils/db";
+import dbConnect from "@/utils/dbConnect";
 import bcrypt from "bcryptjs";
 import { v2 as cloudinary } from "cloudinary";
 
@@ -10,7 +10,7 @@ const POST = async (request: NextRequest) => {
   try {
     const { email, password, userName, userPicture } = await request.json();
     console.log("userpic");
-    await connect();
+    await dbConnect();
     const existingUser = await UserModel.findOne({ email });
     console.log("existing user", existingUser);
     if (existingUser) {
@@ -40,6 +40,8 @@ const POST = async (request: NextRequest) => {
       userName,
       userPicture: userImage,
     });
+
+    console.log("newuser part2 :>> ", newUser);
 
     await newUser.save();
     return NextResponse.json(
