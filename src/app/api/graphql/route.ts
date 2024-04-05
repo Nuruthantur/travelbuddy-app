@@ -10,6 +10,7 @@ import { getServerSession } from "next-auth";
 export type MyContext = {
   session: any;
 };
+
 const server = new ApolloServer<MyContext>({
   resolvers,
   typeDefs,
@@ -19,10 +20,13 @@ const res = { getHeader() {}, setCookie() {}, setHeader() {} };
 
 const handler = startServerAndCreateNextHandler(server, {
   context: async (req, res) => {
-    const currentSession = await getServerSession(authOptions);
-    // const currentSession = await getServerSession(req.headers.cookie);
-    console.log("currentsession", currentSession);
-    return { session: currentSession };
+    const session = await getServerSession();
+    // console.log("req, res", req, res);
+    // console.log("current session: ", session?.user?.email);
+    // const token = req.headers.authorization || '';
+    // try to retrieve a user with the token
+
+    return { session: session };
   },
 });
 console.log("🚀 Server listening at: ", handler);

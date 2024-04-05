@@ -1,12 +1,21 @@
 const typeDefs = `#graphql
   type User {
     id: ID!
-    email: String!
     userName: String!
     password: String!
+    email: String!
     firstName: String
     lastName: String
     hometown: String
+    birthDate: String
+    public_id: String
+    likes: String
+    requests: String
+    connections: String
+    aboutYourself: String
+    travelingDates: String
+    travelingDestinations: String
+    userPicture: String
   }
 
   type successMessage{
@@ -54,7 +63,6 @@ const typeDefs = `#graphql
     logout: successMessage
     deleteUser(id: ID!): successMessage
     completeUserSignup(input: updateUser!): User
-    
   }
 `;
 
