@@ -13,7 +13,7 @@ const Dashboard = async () => {
   }
 
   await dbConnect();
-  // in the find() do logic to not get me and user that are not liked yet
+  //TODO - in the find() do logic to not get me and user that are not liked yet
   const people: User[] = await UserModel.find().select("-password");
   // console.log(people);
   return (

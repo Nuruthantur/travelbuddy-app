@@ -3,9 +3,6 @@ import { useState } from "react";
 import TinderCard from "react-tinder-card";
 import "./Cards.css";
 import User from "@/@types/User";
-import dbConnect from "@/utils/dbConnect";
-import UserModel from "@/models/User";
-import { getServerSession } from "next-auth";
 import pushIdToLikesArray from "@/utils/pushIdToLikesArray";
 import { useSession } from "next-auth/react";
 
@@ -13,28 +10,14 @@ type Props = {
   person: User;
 };
 
-// export const GETALLUSERS = gql`
-//   query getAllUsers {
-//     id
-//     userName
-//     email
-//     firstName
-//     lastName
-//     hometown
-//   }
-// `;
-
-//TODO - remove the current user from the array of cards
-
 const Card = ({ person }: Props) => {
   const session = useSession();
-  console.log(session);
+
   const [likedUsers, setLikedUsers] = useState([]);
 
   const onSwipe = async (direction: any) => {
     // const currentUser = UserModel.findById({ _id: person._id });
 
-    // console.log(currentUser);
     if (direction === "right") {
       if (typeof session?.data?.user?.email != "string") return;
 
@@ -77,16 +60,18 @@ const Card = ({ person }: Props) => {
       onCardLeftScreen={() => onCardLeftScreen("fooBar")}
       preventSwipe={["up", "down"]}>
       <div
-        className="relative w-[600px] max-w-[85vw] h-[50vh] bg-cover bg-center shadow-[0px_18px_53px_0px_rgba(0,0,0,0.3)] p-5 rounded-[20px];
+        className="relative w-[600px] max-w-[85vw] h-[50vh] bg-cover bg-center p-5 rounded-[20px] text-white;
 "
-        style={{ backgroundImage: `url(https://placehold.jp/250x250.png)` }}
-        // style={{ backgroundImage: `url(${person.userPicture})` }}
-      >
-        <h3 className="absolute  text-[black]">
+        style={{
+          backgroundImage: person.userPicture
+            ? `url(${person.userPicture})`
+            : "url(https://placehold.jp/250x250.png)",
+        }}>
+        <h3 className="absolute  text-white">
           Name: {person.firstName} {person.lastName}
         </h3>
         <br />
-        <h3 className="absolute bottom-[10px] text-[black]">
+        <h3 className="absolute bottom-[10px] text-[white]">
           Email: {person.email}
         </h3>
       </div>
