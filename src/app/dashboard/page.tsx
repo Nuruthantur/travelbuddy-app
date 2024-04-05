@@ -8,8 +8,6 @@ import UserModel from "@/models/User";
 import Navbar from "@/components/Navbar";
 const Dashboard = async () => {
   const session = await getServerSession(); //in server component
-  // console.log("session dash :>> ", session);
-
   if (!session) {
     redirect("/login");
   }
