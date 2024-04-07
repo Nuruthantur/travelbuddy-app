@@ -21,6 +21,7 @@ type updateUserInformation = {
   lastName: string;
   hometown: string;
   birthDate: Date;
+  hobbies: string;
   aboutYourSelf: string;
   travelingDates: string;
   travelingDestinations: string;
@@ -88,14 +89,22 @@ const resolvers = {
       //   }
       console.log("params.email :>> ", params.email);
       await dbConnect();
-      const updatedUser = await UserModel.update({
-        email: params.email,
-      })(
+      const updatedUser = await UserModel.findOneAndUpdate(
+        { email: params.email },
+
         // TODO - do this with the token and not the id (or get the session of a user from next auth)
         {
           $set: {
             firstName: params.input.firstName,
             lastName: params.input.lastName,
+            userName: params.input.userName,
+            email: params.input.email,
+            hobbies: params.input.hobbies,
+            birthDate: params.input.birthDate,
+            aboutYourSelf: params.input.aboutYourSelf,
+            travelingDates: params.input.travelingDates,
+            travelingDestinations: params.input.travelingDestinations,
+
           },
         },
         { new: true }

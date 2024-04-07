@@ -8,62 +8,202 @@ import {
   ReactNode,
   ReactPortal,
   AwaitedReactNode,
+  useState,
+  ChangeEvent,
+  FormEvent,
 } from "react";
 import Image from "next/image";
 import image from "../img/full-background.png";
-import { PhotoIcon, UserCircleIcon } from "@heroicons/react/24/solid";
+import { UserCircleIcon } from "@heroicons/react/24/solid";
 import DateRangePicker from "./DateRangePicker";
-import User from "@/@types/User";
+import { useSession } from "next-auth/react";
 
-const UPDATE_USER = gql`
-  mutation UpdateUserInformation($input: UpdateUserInformation!, $id: ID!) {
-    updateUserInformation(input: $input, id: $id) {
+// const UPDATE_USER_INFORMATION = gql`
+//   mutation UpdateUserInformation(
+//     $input: UpdateUserInformation!
+//     $email: String!
+//   ) {
+//     updateUserInformation(input: $input, email: $email) {
+//       email
+//       userName
+//       firstName
+//       lastName
+//       birthDate
+//       travelingDates
+//       travelingDestination
+//       hobbies
+//       aboutYourself
+//     }
+//   }
+// `;
+
+// export default function UpdateProfile() {
+//   const session = useSession();
+//   console.log("session update :>> ", session);
+//   const loggedInEmail = session?.data?.user?.email;
+//   console.log("loggedInEmail :>> ", loggedInEmail);
+//   const [updateUser, { loading, error, data }] = useMutation(
+//     UPDATE_USER_INFORMATION
+//   );
+//   console.log("data :>> ", data);
+
+//   const [userName, setUserName] = useState("");
+//   const [email, setEmail] = useState("");
+//   const [firstName, setFirstName] = useState("");
+//   const [lastName, setLastName] = useState("");
+//   const [birthDate, setBirthDate] = useState("");
+//   // const [city, setCity] = useState("");
+//   const [travelingDates, setTravelingDates] = useState("");
+//   const [hobbies, setHobbies] = useState("");
+//   const [travelingDestination, setTravelingDestination] = useState("");
+//   const [aboutYourself, setAboutYourself] = useState("");
+//   console.log(
+//     "email, userName, firstName, lastName :>> ",
+//     email,
+//     userName,
+//     firstName,
+//     lastName
+//   );
+
+//   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
+//     const { name, value } = e.target;
+//     const setters: {
+//       [key: string]: React.Dispatch<React.SetStateAction<string>>;
+//     } = {
+//       username: setUserName,
+//       email: setEmail,
+//       firstname: setFirstName,
+//       lastname: setLastName,
+//       birthdate: setBirthDate,
+//       travelingDates: setTravelingDates,
+//       hobbies: setHobbies,
+//       travelingDestination: setTravelingDestination,
+//       aboutYourself: setAboutYourself,
+//     };
+//     const setter = setters[name];
+//     if (setter) {
+//       setter(value);
+//     }
+//   };
+
+//   const handleSubmit = () => {
+//     updateUser({
+//       variables: {
+//         input: {
+//           email: email,
+//           userName: userName,
+//           firstName: firstName,
+//           lastName: lastName,
+//           birthDate: birthDate,
+//           travelingDates: travelingDates,
+//           travelingDestination: travelingDestination,
+//           hobbies: hobbies,
+//           aboutYourself: aboutYourself,
+//         },
+//         email: loggedInEmail,
+//       },
+//     })
+//       .then(() => {
+//         console.log("User information updated successfully.");
+//         // Reset form fields after successful submission
+//       })
+//       .catch((error) => {
+//         console.error("Error updating user information:", error);
+//       });
+//   };
+
+// const handleChangeUser = () => {
+//   updateUser({
+//     variables: {
+//       input: {
+//         firstName: "",
+//         lastName: "",
+//       },
+//       email: loggedInEmail,
+//     },
+//   });
+// };
+
+const UPDATE_USER_INFORMATION = gql`
+  mutation UpdateUserInformation(
+    $input: UpdateUserInformation!
+    $email: String!
+  ) {
+    updateUserInformation(input: $input, email: $email) {
+      email
+      userName
       firstName
       lastName
+      birthDate
+      travelingDates
+      travelingDestinations
+      hobbies
+      aboutYourSelf
     }
   }
 `;
 
-
 export default function UpdateProfile() {
-  const [updateUser, { loading, error, data }] = useMutation(UPDATE_USER);
-  console.log("data :>> ", data);
-  const handleChangeUser = () => {
-    updateUser({
-      variables: {
-        input: {
-          firstName: "Rauuul",
-          lastName: "Hernandez",
-        },
-        id: "660bc73bb1f258cd49873a23",
-      },
+  const session = useSession();
+  console.log("session update :>> ", session);
+  const loggedInEmail = session?.data?.user?.email;
+  const [updateUser, { data }] = useMutation(UPDATE_USER_INFORMATION);
+  console.log("data.updateUserInformation :>> ", data);
+
+  const [inputValues, setInputValues] = useState({
+    email: "",
+    userName: "",
+    firstName: "",
+    lastName: "",
+    birthDate: "",
+    travelingDates: "",
+    travelingDestinations: "",
+    hobbies: "",
+    aboutYourself: "",
+  });
+
+  const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setInputValues({
+      ...inputValues,
+      [name]: value,
     });
   };
 
-  const submitInputs = () => {};
+  const handleSubmit = async (e: { preventDefault: () => void }) => {
+    e.preventDefault();
+    try {
+      await updateUser({
+        variables: {
+          email: loggedInEmail,
+          input: inputValues,
+        },
+      });
+      console.log("User information updated successfully.");
+      // Reset form fields after successful submission
+      setInputValues({
+        email: "",
+        userName: "",
+        firstName: "",
+        lastName: "",
+        birthDate: "",
+        travelingDates: "",
+        travelingDestinations: "",
+        hobbies: "",
+        aboutYourself: "",
+      });
+    } catch (error) {
+      console.error("Error updating user information:", error);
+    }
+  };
+
   return (
     <>
-      <button onClick={handleChangeUser} className="text-black">
+      {/* <button onClick={handleChangeUser} className="text-black">
         Update User
-      </button>
-      {/* {data?.updatedUser.map((user: User) => {
-        return (
-          <>
-            <div key={user._id}>
-              <li>{user.userName}</li>
-              <li>{user.email}</li>
-              <li>{user.firstName}</li>
-              <li>{user.lastName}</li>
-              <li>{user.hometown}</li>
-              <li>{user.birthDate}</li>
-              <li>{user.aboutYourSelf}</li>
-              <li>{user.travelingDates}</li>
-              <li>{user.travelingDestinations}</li>
-            </div>
-          </>
-        );
-      })} */}
-      <form onSubmit={submitInputs}>
+      </button> */}
+
+      <form onSubmit={handleSubmit}>
         <div className="col-span-full">
           <div className="text-center bg-zinc-200 p-4  border-b-4 border-white">
             <h2 className="text-xl font-semibold leading-7 mt-4 mb-16 text-gray-900">
@@ -113,11 +253,11 @@ export default function UpdateProfile() {
                     <div className="flex rounded-md shadow-sm ring-2 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
                       <input
                         type="text"
-                        name="username"
+                        name="userName"
                         id="username"
-                        autoComplete="username"
                         className="block rounded-lg bg-white flex-1 border-0  py-1.5 pl-1 text-gray-900 placeholder:text-gray-400  sm:text-sm sm:leading-6"
                         placeholder=""
+                        onChange={handleInputChange}
                       />
                     </div>
                   </div>
@@ -135,9 +275,9 @@ export default function UpdateProfile() {
                         type="email"
                         name="email"
                         id="email"
-                        autoComplete="email"
                         className="block rounded-lg bg-white flex-1 border-0  py-1.5 pl-1 text-gray-900 placeholder:text-gray-400  sm:text-sm sm:leading-6"
                         placeholder=""
+                        onChange={handleInputChange}
                       />
                     </div>
                   </div>
@@ -153,11 +293,11 @@ export default function UpdateProfile() {
                     <div className="flex rounded-md shadow-sm ring-2 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
                       <input
                         type="text"
-                        name="firstname"
+                        name="firstName"
                         id="firstname"
-                        autoComplete="firstname"
-                        className="block rounded-lg flex-1 border-0  py-1.5 pl-1 text-gray-900 placeholder:text-gray-400  sm:text-sm sm:leading-6"
+                        className="block rounded-lg flex-1 border-0 py-1.5 pl-1 text-gray-900 placeholder:text-gray-400  sm:text-sm sm:leading-6"
                         placeholder=""
+                        onChange={handleInputChange}
                       />
                     </div>
                   </div>
@@ -173,11 +313,11 @@ export default function UpdateProfile() {
                     <div className="flex rounded-md shadow-sm ring-2 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
                       <input
                         type="text"
-                        name="lastname"
+                        name="lastName"
                         id="lastname"
-                        autoComplete="lastname"
                         className="block rounded-lg flex-1 border-0  py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
                         placeholder=""
+                        onChange={handleInputChange}
                       />
                     </div>
                   </div>
@@ -195,47 +335,30 @@ export default function UpdateProfile() {
                   <div className="flex rounded-md shadow-sm ring-2 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
                     <input
                       type="date"
-                      name="birthdate"
+                      name="birthDate"
                       id="birthdate"
-                      autoComplete="birthdate"
                       className="block rounded-lg bg-white flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
+                      onChange={handleInputChange}
                     />
                   </div>
                 </div>
               </div>
               <div className="sm:col-span-3 m-2">
-                {/* <label
-                  htmlFor="country"
-                  className="block text-sm font-medium leading-6 text-gray-900"
-                >
-                  Country
-                </label>
-                <div>
-                  <select
-                    id="country"
-                    name="country"
-                    autoComplete="country-name"
-                    className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
-                  >
-                    <option>Germany</option>
-                    <option>Canada</option>
-                    <option>Mexico</option>
-                  </select>
-                </div> */}
                 <div className="sm:col-span-3 mt-2">
                   <label
-                    htmlFor="city"
+                    htmlFor="hobbies"
                     className="block text-sm font-medium leading-6 text-gray-900"
                   >
-                    Hometown
+                    Hobbies
                   </label>
                   <div>
                     <input
                       type="text"
-                      name="city"
-                      id="city"
-                      autoComplete="address-level2"
+                      name="hobbies"
+                      id="hobbies"
                       className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                      placeholder=""
+                      onChange={handleInputChange}
                     />
                   </div>
                 </div>
@@ -262,8 +385,9 @@ export default function UpdateProfile() {
                       type="text"
                       name="travelingDestination"
                       id="travelingDestination"
-                      autoComplete="travelingDestination"
                       className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                      placeholder=""
+                      onChange={handleInputChange}
                     />
                   </div>
                 </div>
@@ -277,12 +401,13 @@ export default function UpdateProfile() {
                   About Yourself
                 </label>
                 <div>
-                  <textarea
+                  <input
                     id="about"
-                    name="about"
-                    rows={3}
+                    name="aboutYourself"
+                    // rows={3}
                     className="block bg-white w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                    defaultValue={""}
+                    placeholder=""
+                    onChange={handleInputChange}
                   />
                 </div>
               </div>

@@ -1,8 +1,5 @@
 "use client";
 
-import userEmail from "@/components/getMe";
-import getMe from "@/components/getMe";
-// import getMe from "@/components/getMe";
 import { gql, useMutation } from "@apollo/client";
 import { UserCircleIcon } from "@heroicons/react/24/solid";
 import { signOut, useSession } from "next-auth/react";
@@ -23,7 +20,7 @@ const DELETE_USER = gql`
 
 function page() {
   const session = useSession();
-  console.log("session helen :>> ", session);
+  console.log("session:>> ", session);
   const email = session?.data?.user?.email;
   console.log("email :>> ", email);
   const handleLogOut = () => {
