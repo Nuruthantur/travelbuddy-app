@@ -9,12 +9,12 @@ interface UserImageProps {
 
 const UserImage: React.FC<UserImageProps> = ({ user }) => {
   const existingUserImage = user?.userPicture;
-
+  console.log("some process", process.env.PUBLIC_URL);
   return (
     <div>
       {existingUserImage ? (
         <Image
-          src={process.env.PUBLIC_URL + existingUserImage}
+          src={existingUserImage}
           alt={`${user.firstName} ${user.lastName}`}
           width={800}
           height={800}

@@ -4,7 +4,8 @@ import "./Cards.css";
 import User from "@/@types/User";
 import pushIdToLikesArray from "@/utils/pushIdToLikesArray";
 import { useSession } from "next-auth/react";
-import UserImage from "./UserImage";
+import { InformationCircleIcon } from "@heroicons/react/24/solid";
+import { useState } from "react";
 
 type Props = {
   user: User;
@@ -13,6 +14,20 @@ type Props = {
 const Card: React.FC<Props> = ({ user }: Props) => {
   const session = useSession();
 
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const openModal = () => {
+    setIsModalOpen(true);
+    document.addEventListener("click", closeModalOnClickOutside);
+  };
+
+  const closeModalOnClickOutside = (event: MouseEvent) => {
+    closeModal();
+  };
+  const closeModal = () => {
+    setIsModalOpen(false);
+    document.removeEventListener("click", closeModalOnClickOutside);
+  };
   const onSwipe = async (direction: any) => {
     // const currentUser = UserModel.findById({ _id: user._id });
 
@@ -52,13 +67,13 @@ const Card: React.FC<Props> = ({ user }: Props) => {
   return (
     <TinderCard
       key={user._id}
-      className="absolute "
+      className="absolute h-10 "
       onSwipe={onSwipe}
       flickOnSwipe={true}
       onCardLeftScreen={() => onCardLeftScreen("fooBar")}
       preventSwipe={["up", "down"]}>
       <div
-        className="relative w-[600px] max-w-[85vw] h-[50vh] bg-cover bg-center p-5 rounded-[20px] text-white;
+        className="flex flex-col relative w-[600px] max-w-[85vw] h-[50vh] bg-cover bg-center p-5 rounded-[20px] text-white;
 "
         style={{
           backgroundImage: user.userPicture
@@ -71,15 +86,51 @@ const Card: React.FC<Props> = ({ user }: Props) => {
         //   backgroundColor: "blue",
         // }}
       >
-        {/* <UserImage user={user} />
-        <br /> */}
-        <h3 className="absolute  text-white">
-          {/* <UserImage /> */}
-          Name: {user.firstName} {user.lastName}
-        </h3>
-        <br />
+        {/* <UserImage user={user} /> */}
+        <div className="flex">
+          <button onClick={openModal}>
+            <InformationCircleIcon className="h-10 w-10 text-black-100" />
+          </button>
+        </div>
+        <div>
+          {isModalOpen && (
+            <div className=" fixed flex items-center justify-center z-10 ">
+              <div className="bg-white rounded-lg p-6">
+                <h2 className="text-lg font-medium">
+                  Username: {user.userName}
+                </h2>
+                <p className="mt-4">
+                  Full name: {user.firstName}
+                  {user.lastName}
+                </p>
+                <p className="mt-4">
+                  Some info about yourself:{" "}
+                  {user.aboutYourSelf ? user.aboutYourSelf : "not provided"}
+                </p>
+                <p className="mt-4">
+                  Hobbies:{" "}
+                  {user.hobbies
+                    ? user.hobbies
+                    : "I don't have any hobbies (ಥ◡ಥ)"}
+                </p>
+                <p className="mt-4">
+                  Hometown: {user.hometown ? user.hometown : "unknown"}
+                </p>
+
+                <button
+                  className="mt-4 px-4 py-2 bg-blue-500 text-white rounded-lg"
+                  onClick={closeModal}>
+                  Close
+                </button>
+              </div>
+            </div>
+          )}
+        </div>
+        <div>
+          <h3 className="absolute  text-white"></h3>
+        </div>
         <h3 className="absolute bottom-[10px] text-[white]">
-          Email: {user.email}
+          Name: {user.firstName} {user.lastName}
         </h3>
       </div>
     </TinderCard>

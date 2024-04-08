@@ -6,7 +6,6 @@ import Card from "@/components/Card";
 import User from "@/@types/User";
 import UserModel from "@/models/User";
 import Navbar from "@/components/Navbar";
-import UserImage from "@/components/UserImage";
 
 const Dashboard = async () => {
   const session = await getServerSession(); //in server component
@@ -24,7 +23,7 @@ const Dashboard = async () => {
   if (!loggedInUser) {
     return;
   }
-  // using the await UserModel.find method instead of the aggregate
+  // using the find() method instead of the aggregate
   // const people: User[] = await UserModel.find({
   //   $or: [
   //     { email: { $ne: loggedInUser.email } },

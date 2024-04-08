@@ -11,7 +11,6 @@ export default async function likes() {
     redirect("/login");
   }
   await dbConnect();
-  // const users = (await UserModel.find({})) as User[];
 
   const usersEmail = session?.user?.email;
 
