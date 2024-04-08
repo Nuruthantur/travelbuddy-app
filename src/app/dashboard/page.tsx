@@ -6,6 +6,7 @@ import Card from "@/components/Card";
 import User from "@/@types/User";
 import UserModel from "@/models/User";
 import Navbar from "@/components/Navbar";
+import UserImage from "@/components/UserImage";
 
 const Dashboard = async () => {
   const session = await getServerSession(); //in server component
@@ -30,7 +31,8 @@ const Dashboard = async () => {
   //     { _id: { $ne: loggedInUser._id } },
   //   ],
   // });;
-  const people: User[] = await UserModel.aggregate([
+
+  const users: User[] = await UserModel.aggregate([
     { $match: { email: { $ne: loggedInUser.email } } }, // all users but logged in user
   ]);
 
@@ -39,7 +41,7 @@ const Dashboard = async () => {
       <div className="flex justify-center my-3">
         <h1>Cards</h1>
 
-        {people.map((user: User) => (
+        {users.map((user: User) => (
           <Card key={user.email} user={JSON.parse(JSON.stringify(user))} />
         ))}
       </div>

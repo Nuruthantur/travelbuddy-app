@@ -8,13 +8,13 @@ interface UserImageProps {
 }
 
 const UserImage: React.FC<UserImageProps> = ({ user }) => {
-  const userImage = user?.userPicture; // Access the userImage property from the user object
+  const existingUserImage = user?.userPicture;
 
   return (
     <div>
-      {userImage ? (
+      {existingUserImage ? (
         <Image
-          src={userImage}
+          src={process.env.PUBLIC_URL + existingUserImage}
           alt={`${user.firstName} ${user.lastName}`}
           width={800}
           height={800}

@@ -43,18 +43,13 @@ export default async function likes() {
     allLikedUsers = likedUsers;
   }
 
-  // this would retrieve all users who have liked at least one other user LOL
-  // const likedUsers: User[] = await UserModel.find({
-  //   users: { $in: [{ likes: "" }] },
-  // }).select("-password");
-
   return (
     <>
       <div className="text-black flex justify-center flex-col items-center ">
         <h1>Cards go here </h1>
 
         <div className="flex  my-3">
-          <LikedUsersList allLikedUsers={allLikedUsers} />
+          <LikedUsersList users={allLikedUsers} />
         </div>
       </div>
     </>

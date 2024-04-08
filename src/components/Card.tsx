@@ -61,18 +61,20 @@ const Card: React.FC<Props> = ({ user }: Props) => {
         className="relative w-[600px] max-w-[85vw] h-[50vh] bg-cover bg-center p-5 rounded-[20px] text-white;
 "
         style={{
-          background: "none",
+          backgroundImage: user.userPicture
+            ? `url(${user.userPicture})`
+            : "url(https://placehold.jp/250x250.png)",
         }}
+
         // style={{
-        //   background
-        // Image:user.userPicture
-        //     ? `url(${user.userPicture})`
-        //     : "url(https://placehold.jp/250x250.png)",
+        //   background: "none",
+        //   backgroundColor: "blue",
         // }}
       >
-        <UserImage user={user} />
-        <br />
+        {/* <UserImage user={user} />
+        <br /> */}
         <h3 className="absolute  text-white">
+          {/* <UserImage /> */}
           Name: {user.firstName} {user.lastName}
         </h3>
         <br />

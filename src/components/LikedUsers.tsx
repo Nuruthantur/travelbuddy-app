@@ -1,22 +1,19 @@
 "use client";
 import User from "@/@types/User";
-import dbConnect from "@/utils/dbConnect";
-import UserModel from "@/models/User";
 import React from "react";
 import { Button } from "./Button";
-import { getServerSession } from "next-auth";
-import { redirect } from "next/navigation";
 
 // type Props = {};
-interface LikedUsersListProps {
-  allLikedUsers: User[];
+interface Props {
+  users: User[];
 }
-const LikedUsersList: React.FC<LikedUsersListProps> = ({ allLikedUsers }) => {
+const LikedUsersList = ({ users }: Props) => {
   return (
     <div style={{ border: "solid black 1px", padding: "0 1rem" }}>
       <h3>Here is a list your liked users</h3>
+
       <ul>
-        {allLikedUsers.map((user) => {
+        {users.map((user) => {
           return (
             <>
               <div
@@ -27,7 +24,12 @@ const LikedUsersList: React.FC<LikedUsersListProps> = ({ allLikedUsers }) => {
                 <p className="text-md font-light">{user.email}</p>
                 <p className="text-md font-light">{user.userName}</p>
 
-                <Button>Message</Button>
+                <Button
+                  onClick={(e) => {
+                    console.log("button has been clicked" + e);
+                  }}>
+                  Message
+                </Button>
               </div>
             </>
           );
