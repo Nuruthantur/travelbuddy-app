@@ -1,29 +1,27 @@
 "use client";
-import { useState } from "react";
 import TinderCard from "react-tinder-card";
 import "./Cards.css";
 import User from "@/@types/User";
 import pushIdToLikesArray from "@/utils/pushIdToLikesArray";
 import { useSession } from "next-auth/react";
+import UserImage from "./UserImage";
 
 type Props = {
-  person: User;
+  user: User;
 };
 
-const Card = ({ person }: Props) => {
+const Card: React.FC<Props> = ({ user }: Props) => {
   const session = useSession();
 
-  const [likedUsers, setLikedUsers] = useState([]);
-
   const onSwipe = async (direction: any) => {
-    // const currentUser = UserModel.findById({ _id: person._id });
+    // const currentUser = UserModel.findById({ _id: user._id });
 
     if (direction === "right") {
       if (typeof session?.data?.user?.email != "string") return;
 
       try {
         const result = await pushIdToLikesArray(
-          person._id,
+          user._id,
           session.data?.user?.email
         );
         console.log(result);
@@ -48,12 +46,12 @@ const Card = ({ person }: Props) => {
     console.log(myIdentifier + " left the screen");
     //NOTE - What happens with the card after it has left the screen
   };
-
+  const MyComponent = user?.userPicture;
   //TODO - after all cards have been swiped there should be either a message or a refetch of all cards
 
   return (
     <TinderCard
-      key={person._id}
+      key={user._id}
       className="absolute "
       onSwipe={onSwipe}
       flickOnSwipe={true}
@@ -63,16 +61,23 @@ const Card = ({ person }: Props) => {
         className="relative w-[600px] max-w-[85vw] h-[50vh] bg-cover bg-center p-5 rounded-[20px] text-white;
 "
         style={{
-          backgroundImage: person.userPicture
-            ? `url(${person.userPicture})`
-            : "url(https://placehold.jp/250x250.png)",
-        }}>
+          background: "none",
+        }}
+        // style={{
+        //   background
+        // Image:user.userPicture
+        //     ? `url(${user.userPicture})`
+        //     : "url(https://placehold.jp/250x250.png)",
+        // }}
+      >
+        <UserImage user={user} />
+        <br />
         <h3 className="absolute  text-white">
-          Name: {person.firstName} {person.lastName}
+          Name: {user.firstName} {user.lastName}
         </h3>
         <br />
         <h3 className="absolute bottom-[10px] text-[white]">
-          Email: {person.email}
+          Email: {user.email}
         </h3>
       </div>
     </TinderCard>
