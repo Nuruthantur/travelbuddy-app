@@ -5,6 +5,10 @@ import { Inter } from "next/font/google";
 import { getServerSession } from "next-auth";
 import SessionProvider from "@/utils/SessionProvider";
 import { ApolloWrapper } from "@/lib/apolloWrapper";
+import { ThemeProvider } from "@/components/theme-provider";
+import Navbar from "@/components/Navbar";
+import ToggleMode from "@/components/ToggleMode";
+import Dashboard from "./dashboard/page";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -25,7 +29,16 @@ export default async function RootLayout({
         <body className={inter.className}>
           <SessionProvider session={session}>
             <div className="mx-auto max-w-5xl text-2xl gap-2 mb-10">
-              {children}
+              <ThemeProvider
+                attribute="class"
+                defaultTheme="dark"
+                enableSystem
+                disableTransitionOnChange
+              >
+                {" "}
+                {children}
+                {/* <Dashboard /> */}
+              </ThemeProvider>
             </div>
           </SessionProvider>
         </body>
