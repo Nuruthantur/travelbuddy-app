@@ -7,6 +7,7 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { useSession } from "next-auth/react";
 import React from "react";
+import ToggleMode from "@/components/ToggleMode";
 
 export default function Signup() {
   const [error, setError] = useState("");
@@ -69,6 +70,8 @@ export default function Signup() {
   return (
     sessionStatus !== "authenticated" && (
       <>
+        <ToggleMode />
+
         <div className="flex items-center">
           <Image
             src={image}

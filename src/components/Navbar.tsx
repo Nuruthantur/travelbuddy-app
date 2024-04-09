@@ -7,6 +7,7 @@ import { CiHeart } from "react-icons/ci";
 import { RiUserAddLine } from "react-icons/ri";
 import { signOut, useSession } from "next-auth/react";
 import { sign } from "crypto";
+import ToggleMode from "./ToggleMode";
 
 const Navbar = () => {
   const [showUserDropdown, setShowUserDropdown] = useState(false);
@@ -133,13 +134,7 @@ const Navbar = () => {
                       </Link>
                     </li>
                     <li aria-labelledby="dropdownNavbarLink">
-                      <button
-                        id="doubleDropdownButton"
-                        type="button"
-                        className="flex items-center justify-between w-full px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
-                      >
-                        Theme
-                      </button>
+                      <ToggleMode />
                     </li>
                     <li>
                       <Link
