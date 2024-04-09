@@ -313,8 +313,8 @@ img {
   }
 } */
 
-@layer base {
-  * {
+/* @layer base {
+
     @apply border-border;
   }
   body {
@@ -323,4 +323,4 @@ img {
   a {
     @apply hover:text-primary;
   }
-}
+} */

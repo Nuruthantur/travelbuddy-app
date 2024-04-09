@@ -93,7 +93,7 @@ function UpdateProfileCC({ data }: { data: any }) {
 
   return (
     <>
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit} style={{ fontSize: "19px" }}>
         <div className="col-span-full">
           <div className="text-center bg-zinc-200 p-4  border-b-4 border-white">
             <h2 className="text-xl font-semibold leading-7 mt-4 mb-16 text-gray-900">
@@ -187,7 +187,7 @@ function UpdateProfileCC({ data }: { data: any }) {
                         type="text"
                         name="firstName"
                         id="firstname"
-                        className="block rounded-lg flex-1 border-0 py-1.5 pl-1 text-gray-900 placeholder:text-gray-400  sm:text-sm sm:leading-6"
+                        className="block bg-white rounded-lg flex-1 border-0 py-1.5 pl-1 text-gray-900 placeholder:text-gray-400  sm:text-sm sm:leading-6"
                         // value={inputValues.firstName}
                         placeholder={inputValues.firstName}
                         onChange={(e) => handleInputChange(e)}
@@ -208,7 +208,7 @@ function UpdateProfileCC({ data }: { data: any }) {
                         type="text"
                         name="lastName"
                         id="lastname"
-                        className="block rounded-lg flex-1 border-0  py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
+                        className="block bg-white rounded-lg flex-1 border-0  py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
                         // value={inputValues.lastName}
                         placeholder={inputValues.lastName}
                         onChange={(e) => handleInputChange(e)}
@@ -252,7 +252,7 @@ function UpdateProfileCC({ data }: { data: any }) {
                       type="text"
                       name="hobbies"
                       id="hobbies"
-                      className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                      className="block w-full bg-white rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                       // value={inputValues.hobbies}
                       placeholder={inputValues.hobbies}
                       onChange={(e) => handleInputChange(e)}
@@ -312,7 +312,7 @@ function UpdateProfileCC({ data }: { data: any }) {
                       type="text"
                       name="travelingDestination"
                       id="travelingDestination"
-                      className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                      className="block w-full bg-white rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                       // value={inputValues.travelingDestinations}
                       placeholder={inputValues.travelingDestinations}
                       onChange={(e) => handleInputChange(e)}
