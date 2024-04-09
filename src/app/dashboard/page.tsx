@@ -6,26 +6,43 @@ import Card from "@/components/Card";
 import User from "@/@types/User";
 import UserModel from "@/models/User";
 import Navbar from "@/components/Navbar";
+import ToggleMode from "@/components/ToggleMode";
+
 const Dashboard = async () => {
   const session = await getServerSession(); //in server component
   if (!session) {
     redirect("/login");
   }
-
   await dbConnect();
-  //TODO - in the find() do logic to not get me and user that are not liked yet
-  const people: User[] = await UserModel.find().select("-password");
-  // console.log(people);
+
+  const loggedInUserEmail = session?.user?.email;
+
+  const loggedInUser: User = await UserModel.findOne({
+    email: loggedInUserEmail,
+  });
+
+  if (!loggedInUser) {
+    return;
+  }
+  // using the find() method instead of the aggregate
+  // const people: User[] = await UserModel.find({
+  //   $or: [
+  //     { email: { $ne: loggedInUser.email } },
+  //     { _id: { $ne: loggedInUser._id } },
+  //   ],
+  // });;
+
+  const users: User[] = await UserModel.aggregate([
+    { $match: { email: { $ne: loggedInUser.email } } }, // all users but logged in user
+  ]);
+
   return (
     <div>
       <div className="flex justify-center my-3">
         <h1>Cards</h1>
 
-        {people.map((person: User) => (
-          <Card
-            key={person.email}
-            person={JSON.parse(JSON.stringify(person))}
-          />
+        {users.map((user: User) => (
+          <Card key={user.email} user={JSON.parse(JSON.stringify(user))} />
         ))}
       </div>
     </div>

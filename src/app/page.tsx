@@ -2,6 +2,7 @@ import Image from "next/image";
 import image from "../img/background.png";
 import Login from "./login/page";
 import Link from "next/link";
+import ToggleMode from "@/components/ToggleMode";
 
 export default function Home() {
   return (
