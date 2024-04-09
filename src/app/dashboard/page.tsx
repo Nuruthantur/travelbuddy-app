@@ -6,6 +6,7 @@ import Card from "@/components/Card";
 import User from "@/@types/User";
 import UserModel from "@/models/User";
 import Navbar from "@/components/Navbar";
+import ToggleMode from "@/components/ToggleMode";
 
 const Dashboard = async () => {
   const session = await getServerSession(); //in server component
