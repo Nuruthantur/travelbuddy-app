@@ -5,7 +5,6 @@ import { UserCircleIcon } from "@heroicons/react/24/solid";
 import { signOut, useSession } from "next-auth/react";
 import Link from "next/link";
 import React from "react";
-import { getServerSession } from "next-auth";
 
 const DELETE_USER = gql`
   mutation DeleteUser($email: String!) {

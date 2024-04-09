@@ -1,129 +1,18 @@
 "use client";
 
-import { gql, useMutation, useQuery } from "@apollo/client";
-import {
-  Key,
-  ReactElement,
-  JSXElementConstructor,
-  ReactNode,
-  ReactPortal,
-  AwaitedReactNode,
-  useState,
-  ChangeEvent,
-  FormEvent,
-} from "react";
+import React, { ChangeEvent, ReactNode, useEffect, useState } from "react";
 import Image from "next/image";
 import image from "../img/full-background.png";
 import { UserCircleIcon } from "@heroicons/react/24/solid";
 import DateRangePicker from "./DateRangePicker";
 import { useSession } from "next-auth/react";
+import { gql, useMutation } from "@apollo/client";
+import { useRouter } from "next/router";
 
-// const UPDATE_USER_INFORMATION = gql`
-//   mutation UpdateUserInformation(
-//     $input: UpdateUserInformation!
-//     $email: String!
-//   ) {
-//     updateUserInformation(input: $input, email: $email) {
-//       email
-//       userName
-//       firstName
-//       lastName
-//       birthDate
-//       travelingDates
-//       travelingDestination
-//       hobbies
-//       aboutYourself
-//     }
-//   }
-// `;
-
-// export default function UpdateProfile() {
-//   const session = useSession();
-//   console.log("session update :>> ", session);
-//   const loggedInEmail = session?.data?.user?.email;
-//   console.log("loggedInEmail :>> ", loggedInEmail);
-//   const [updateUser, { loading, error, data }] = useMutation(
-//     UPDATE_USER_INFORMATION
-//   );
-//   console.log("data :>> ", data);
-
-//   const [userName, setUserName] = useState("");
-//   const [email, setEmail] = useState("");
-//   const [firstName, setFirstName] = useState("");
-//   const [lastName, setLastName] = useState("");
-//   const [birthDate, setBirthDate] = useState("");
-//   // const [city, setCity] = useState("");
-//   const [travelingDates, setTravelingDates] = useState("");
-//   const [hobbies, setHobbies] = useState("");
-//   const [travelingDestination, setTravelingDestination] = useState("");
-//   const [aboutYourself, setAboutYourself] = useState("");
-//   console.log(
-//     "email, userName, firstName, lastName :>> ",
-//     email,
-//     userName,
-//     firstName,
-//     lastName
-//   );
-
-//   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
-//     const { name, value } = e.target;
-//     const setters: {
-//       [key: string]: React.Dispatch<React.SetStateAction<string>>;
-//     } = {
-//       username: setUserName,
-//       email: setEmail,
-//       firstname: setFirstName,
-//       lastname: setLastName,
-//       birthdate: setBirthDate,
-//       travelingDates: setTravelingDates,
-//       hobbies: setHobbies,
-//       travelingDestination: setTravelingDestination,
-//       aboutYourself: setAboutYourself,
-//     };
-//     const setter = setters[name];
-//     if (setter) {
-//       setter(value);
-//     }
-//   };
-
-//   const handleSubmit = () => {
-//     updateUser({
-//       variables: {
-//         input: {
-//           email: email,
-//           userName: userName,
-//           firstName: firstName,
-//           lastName: lastName,
-//           birthDate: birthDate,
-//           travelingDates: travelingDates,
-//           travelingDestination: travelingDestination,
-//           hobbies: hobbies,
-//           aboutYourself: aboutYourself,
-//         },
-//         email: loggedInEmail,
-//       },
-//     })
-//       .then(() => {
-//         console.log("User information updated successfully.");
-//         // Reset form fields after successful submission
-//       })
-//       .catch((error) => {
-//         console.error("Error updating user information:", error);
-//       });
-//   };
-
-// const handleChangeUser = () => {
-//   updateUser({
-//     variables: {
-//       input: {
-//         firstName: "",
-//         lastName: "",
-//       },
-//       email: loggedInEmail,
-//     },
-//   });
+// type Props = {
+//   handleSubmit: any;
+//   handleInputChange: any;
 // };
-
 const UPDATE_USER_INFORMATION = gql`
   mutation UpdateUserInformation(
     $input: UpdateUserInformation!
@@ -143,27 +32,31 @@ const UPDATE_USER_INFORMATION = gql`
   }
 `;
 
-export default function UpdateProfile() {
+function UpdateProfileCC({ data }: { data: any }) {
+  console.log("data :>> ", data);
   const session = useSession();
   console.log("session update :>> ", session);
   const loggedInEmail = session?.data?.user?.email;
-  const [updateUser, { data }] = useMutation(UPDATE_USER_INFORMATION);
-  console.log("data.updateUserInformation :>> ", data);
+  const [updateUser] = useMutation(UPDATE_USER_INFORMATION);
 
   const [inputValues, setInputValues] = useState({
-    email: "",
-    userName: "",
-    firstName: "",
-    lastName: "",
-    birthDate: "",
-    travelingDates: "",
-    travelingDestinations: "",
-    hobbies: "",
-    aboutYourself: "",
+    email: data.email,
+    userName: data.userName,
+    firstName: data.firstName,
+    lastName: data.lastName,
+    birthDate: data.birthDate,
+    travelingDates: data.travelingDates,
+    travelingDestinations: data.travelingDestinations,
+    hobbies: data.hobbies,
+    aboutYourself: data.aboutYourself,
   });
 
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
+    e.preventDefault();
     const { name, value } = e.target;
+    if (value === "") {
+      return setInputValues({ ...inputValues, [name]: data[name] });
+    }
     setInputValues({
       ...inputValues,
       [name]: value,
@@ -172,6 +65,7 @@ export default function UpdateProfile() {
 
   const handleSubmit = async (e: { preventDefault: () => void }) => {
     e.preventDefault();
+    console.log("inputValues :>> ", inputValues);
     try {
       await updateUser({
         variables: {
@@ -180,29 +74,25 @@ export default function UpdateProfile() {
         },
       });
       console.log("User information updated successfully.");
-      // Reset form fields after successful submission
-      setInputValues({
-        email: "",
-        userName: "",
-        firstName: "",
-        lastName: "",
-        birthDate: "",
-        travelingDates: "",
-        travelingDestinations: "",
-        hobbies: "",
-        aboutYourself: "",
+      const inputs = document.querySelectorAll("input");
+      inputs.forEach((input) => {
+        input.value = "";
       });
     } catch (error) {
       console.error("Error updating user information:", error);
     }
   };
 
+  const handleDateChange = (newDate: string) => {
+    setInputValues({
+      ...inputValues,
+      travelingDates: newDate,
+    });
+  };
+  //?----------------------------------------------------------------
+
   return (
     <>
-      {/* <button onClick={handleChangeUser} className="text-black">
-        Update User
-      </button> */}
-
       <form onSubmit={handleSubmit}>
         <div className="col-span-full">
           <div className="text-center bg-zinc-200 p-4  border-b-4 border-white">
@@ -256,8 +146,9 @@ export default function UpdateProfile() {
                         name="userName"
                         id="username"
                         className="block rounded-lg bg-white flex-1 border-0  py-1.5 pl-1 text-gray-900 placeholder:text-gray-400  sm:text-sm sm:leading-6"
-                        placeholder=""
-                        onChange={handleInputChange}
+                        // value={inputValues.userName}
+                        placeholder={inputValues.userName}
+                        onChange={(e) => handleInputChange(e)}
                       />
                     </div>
                   </div>
@@ -276,8 +167,9 @@ export default function UpdateProfile() {
                         name="email"
                         id="email"
                         className="block rounded-lg bg-white flex-1 border-0  py-1.5 pl-1 text-gray-900 placeholder:text-gray-400  sm:text-sm sm:leading-6"
-                        placeholder=""
-                        onChange={handleInputChange}
+                        // value={inputValues.email}
+                        placeholder={inputValues.email}
+                        onChange={(e) => handleInputChange(e)}
                       />
                     </div>
                   </div>
@@ -296,8 +188,9 @@ export default function UpdateProfile() {
                         name="firstName"
                         id="firstname"
                         className="block rounded-lg flex-1 border-0 py-1.5 pl-1 text-gray-900 placeholder:text-gray-400  sm:text-sm sm:leading-6"
-                        placeholder=""
-                        onChange={handleInputChange}
+                        // value={inputValues.firstName}
+                        placeholder={inputValues.firstName}
+                        onChange={(e) => handleInputChange(e)}
                       />
                     </div>
                   </div>
@@ -316,8 +209,9 @@ export default function UpdateProfile() {
                         name="lastName"
                         id="lastname"
                         className="block rounded-lg flex-1 border-0  py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
-                        placeholder=""
-                        onChange={handleInputChange}
+                        // value={inputValues.lastName}
+                        placeholder={inputValues.lastName}
+                        onChange={(e) => handleInputChange(e)}
                       />
                     </div>
                   </div>
@@ -338,7 +232,9 @@ export default function UpdateProfile() {
                       name="birthDate"
                       id="birthdate"
                       className="block rounded-lg bg-white flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
-                      onChange={handleInputChange}
+                      // value={inputValues.birthDate}
+                      placeholder={inputValues.birthDate}
+                      onChange={(e) => handleInputChange(e)}
                     />
                   </div>
                 </div>
@@ -357,8 +253,9 @@ export default function UpdateProfile() {
                       name="hobbies"
                       id="hobbies"
                       className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                      placeholder=""
-                      onChange={handleInputChange}
+                      // value={inputValues.hobbies}
+                      placeholder={inputValues.hobbies}
+                      onChange={(e) => handleInputChange(e)}
                     />
                   </div>
                 </div>
@@ -370,9 +267,39 @@ export default function UpdateProfile() {
                     Traveling Dates
                   </label>
                   <div>
-                    <DateRangePicker />
+                    <DateRangePicker
+                      defaultDates={
+                        inputValues.travelingDates
+                          ? inputValues.travelingDates
+                          : undefined
+                      }
+                      handleChange={handleDateChange}
+                    />
                   </div>
                 </div>
+                {/* <div className="sm:col-span-3 mt-2">
+                  <label
+                    htmlFor="travelingDates"
+                    className="block text-sm font-medium leading-6 text-gray-900"
+                  >
+                    Traveling Dates
+                  </label>
+                  <div>
+                    Render CustomDateRangePicker with appropriate props
+                    <DateRangePicker
+                      selectedRange={inputValues.travelingDates}
+                      handleSelect={(range) => {
+                        setInputValues({
+                          ...inputValues,
+                          travelingDates: `${range.startDate.toDateString()} - ${range.endDate.toDateString()}`,
+                        });
+                      }}
+                      placeholder={inputValues.travelingDates}
+                    />{" "}
+                    
+                  </div>
+                </div> */}
+
                 <div className="sm:col-span-3 mt-2">
                   <label
                     htmlFor="travelingDestination"
@@ -386,8 +313,9 @@ export default function UpdateProfile() {
                       name="travelingDestination"
                       id="travelingDestination"
                       className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                      placeholder=""
-                      onChange={handleInputChange}
+                      // value={inputValues.travelingDestinations}
+                      placeholder={inputValues.travelingDestinations}
+                      onChange={(e) => handleInputChange(e)}
                     />
                   </div>
                 </div>
@@ -406,8 +334,9 @@ export default function UpdateProfile() {
                     name="aboutYourself"
                     // rows={3}
                     className="block bg-white w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                    placeholder=""
-                    onChange={handleInputChange}
+                    // value={inputValues.aboutYourself}
+                    placeholder={inputValues.aboutYourself}
+                    onChange={(e) => handleInputChange(e)}
                   />
                 </div>
               </div>
@@ -431,7 +360,7 @@ export default function UpdateProfile() {
         </div>
       </form>
       <div className="details flex items-center justify-center mt-6 mb-3">
-        <Image src={image} alt="travel" style={{ width: "100px" }} />
+        <Image src={image} alt="travel" style={{ width: "100px" }} priority />
         <div>
           <p
             style={{
@@ -446,3 +375,5 @@ export default function UpdateProfile() {
     </>
   );
 }
+
+export default UpdateProfileCC;

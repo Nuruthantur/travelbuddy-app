@@ -3,15 +3,23 @@
 import React, { useState } from "react";
 import Datepicker from "react-tailwindcss-datepicker";
 
-const DateRangePicker = () => {
+type Props = {
+  handleChange: (newDate: string) => void;
+  defaultDates?: string;
+};
+
+const DateRangePicker = ({ handleChange, defaultDates }: Props) => {
   const [value, setValue] = useState({
-    startDate: null,
-    endDate: null,
+    startDate: defaultDates ? new Date(defaultDates.split("~")[0]) : null,
+    endDate: defaultDates ? new Date(defaultDates.split("~")[1]) : null,
   });
 
   const handleValueChange = (newValue: any) => {
     console.log("newValue:", newValue);
+    const date = newValue.startDate + "~" + newValue.endDate;
+    console.log("date  :>> ", date);
     setValue(newValue);
+    handleChange(date);
   };
 
   return (

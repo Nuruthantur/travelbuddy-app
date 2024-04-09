@@ -3,7 +3,7 @@ import UserCardCC from "@/components/UserCardCC";
 import UserCardSC from "@/components/userCardSC";
 import UsersSC from "@/components/usersSC";
 import TestComponent from "@/components/testComponentCC";
-import UpdateProfile from "@/components/UpdateProfileCC";
+import UpdateProfile from "@/components/UpdateProfileSC";
 import Card1 from "@/components/Card";
 
 export default function TestPage() {
