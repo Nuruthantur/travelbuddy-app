@@ -16,11 +16,11 @@ const UserImage: React.FC<UserImageProps> = ({ user }) => {
         <Image
           src={existingUserImage}
           alt={`${user.firstName} ${user.lastName}`}
-          width={800}
-          height={800}
+          width={250}
+          height={250}
         />
       ) : (
-        <Image src={image} alt="Placeholder image" width={800} height={800} />
+        <Image src={image} alt="Placeholder image" width={250} height={250} />
       )}
     </div>
   );
