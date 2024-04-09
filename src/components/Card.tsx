@@ -87,13 +87,13 @@ const Card: React.FC<Props> = ({ user }: Props) => {
           // }}
         >
           <button onClick={openModal}>
-            <InformationCircleIcon className="h-10 w-10 text-black-100" />
+            <InformationCircleIcon className="h-10 w-10 text-black-100 text-black" />
           </button>
 
           <div>
-            <h3 className="absolute  text-white"></h3>
+            <h3 className="absolute  text-black"></h3>
           </div>
-          <h3 className="absolute bottom-[10px] text-[white]">
+          <h3 className="absolute bottom-[10px] text-[black]">
             Name: {user.firstName} {user.lastName}
           </h3>
         </div>
