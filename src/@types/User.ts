@@ -16,4 +16,5 @@ export default interface User {
   travelingDestinations?: string;
   agreeToTerms?: boolean;
   userPicture?: string;
+  hobbies?: string;
 }

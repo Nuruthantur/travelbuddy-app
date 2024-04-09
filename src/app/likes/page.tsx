@@ -10,34 +10,37 @@ export default async function likes() {
   if (!session) {
     redirect("/login");
   }
-  const usersEmail = session?.user?.email;
   await dbConnect();
+
+  const usersEmail = session?.user?.email;
 
   const loggedInUser: User = await UserModel.findOne({
     email: usersEmail,
   });
+
   if (!loggedInUser) {
     return;
   }
 
   const likedUserIds = await UserModel.aggregate([
-    { $match: { email: loggedInUser.email } }, // Match the loggedInUser
-    { $project: { likes: 1, _id: 0 } }, // Project only the "likes" field
+    { $match: { email: loggedInUser.email } }, // match loggedInUser
+    { $project: { likes: 1, _id: 0 } }, // only project likes field of that user
     { $unwind: "$likes" }, // Unwind the "likes" array to access individual IDs
-    { $group: { _id: null, likedUserIds: { $addToSet: "$likes" } } }, // Gather unique IDs
+    { $group: { _id: "$_id", likedUserIds: { $addToSet: "$likes" } } }, // get ids of liked users
   ]);
   if (!likedUserIds) {
     return;
   }
+  let allLikedUsers: User[] = [];
   if (likedUserIds.length > 0) {
-    const likedUserIdsArray = likedUserIds[0].likedUserIds;
-    console.log(likedUserIdsArray); // Output: Array of unique liked user IDs
+    const likedUsers = await Promise.all(
+      likedUserIds[0].likedUserIds.map(async (likedUserId: User) => {
+        return await UserModel.findById(likedUserId).select("-password");
+      })
+    );
+    console.log("here are the liked users: ", likedUsers); // Array of liked user objects
+    allLikedUsers = likedUsers;
   }
-
-  // this would retrieve all users who have liked at least one other user LOL
-  // const likedUsers: User[] = await UserModel.find({
-  //   users: { $in: [{ likes: "" }] },
-  // }).select("-password");
 
   return (
     <>
@@ -45,7 +48,7 @@ export default async function likes() {
         <h1>Cards go here </h1>
 
         <div className="flex  my-3">
-          <LikedUsersList />
+          <LikedUsersList users={allLikedUsers} />
         </div>
       </div>
     </>
