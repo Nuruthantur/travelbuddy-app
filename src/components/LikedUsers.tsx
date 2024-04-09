@@ -2,7 +2,7 @@ import User from "@/@types/User";
 import dbConnect from "@/utils/dbConnect";
 import UserModel from "@/models/User";
 import React from "react";
-import { Button } from "./Button";
+import { Button } from "./button";
 import { getServerSession } from "next-auth";
 import { redirect } from "next/navigation";
 
@@ -55,7 +55,8 @@ const LikedUsersList = async (props: Props) => {
             <>
               <div
                 key={user._id.toString()}
-                className="flex justify-center border flex-col rounded-sm p-4 mb-2 mt-4 shadow-md sm:w-full  ">
+                className="flex justify-center border flex-col rounded-sm p-4 mb-2 mt-4 shadow-md sm:w-full  "
+              >
                 <h3 className="text-xl font-medium">{`${user.firstName} ${user.lastName}`}</h3>
                 <p className="text-md font-light">{user.email}</p>
                 <p className="text-md font-light">{user.userName}</p>

@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import image from "../../img/background.png";
+import animation from "../../img/animation.png";
 import MultiStep, { newUserValues } from "./multi_step/MultiStep";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
@@ -64,7 +65,16 @@ export default function Signup() {
   };
 
   if (sessionStatus === "loading") {
-    return <h1>Loading...</h1>;
+    return (
+      <div className="details h-screen flex items-center justify-center">
+        <Image
+          src={animation}
+          alt="travel"
+          style={{ width: "100px" }}
+          priority
+        />
+      </div>
+    );
   }
   return (
     sessionStatus !== "authenticated" && (

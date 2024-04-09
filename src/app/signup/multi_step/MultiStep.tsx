@@ -88,6 +88,12 @@ const MultiStep = ({
     setFormData({ ...formData, [fieldName]: fieldValue });
   };
 
+  const handleDateChange = (newDate: string) => {
+    setFormData({
+      ...formData,
+      travelingDates: newDate,
+    });
+  };
   const handleSubmitFormData = () => {
     if (!formData.agreeToTerms) {
       alert("You must agree to the terms and conditions");
@@ -154,6 +160,7 @@ const MultiStep = ({
           handleChangeInput={handleChangeInput}
           handlePrevStep={handlePrevStep}
           handleNextStep={handleNextStep}
+          handleDateChange={handleDateChange}
         />
       ) : null}
       {step === "5" ? (
