@@ -6,26 +6,29 @@ import pushIdToLikesArray from "@/utils/pushIdToLikesArray";
 import { useSession } from "next-auth/react";
 import { InformationCircleIcon } from "@heroicons/react/24/solid";
 import { useState } from "react";
-import UserModal from "./UserModal";
+// import UserModal from "./UserModal";
+import dynamic from "next/dynamic";
 
 type Props = {
   user: User;
 };
 
+const UserModalComponent = dynamic(() => import("./UserModal"), {
+  ssr: false,
+});
+
 const Card: React.FC<Props> = ({ user }: Props) => {
   const session = useSession();
 
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [showMore, setShowMore] = useState(false);
 
   const openModal = () => {
-    setIsModalOpen(true);
+    setShowMore(true);
     document.addEventListener("click", closeModalOnClickOutside);
   };
-  // const testingDocument = document;
-  // console.log(testingDocument);
 
   const closeModalOnClickOutside = () => {
-    setIsModalOpen(false);
+    setShowMore(false);
     document.removeEventListener("click", closeModalOnClickOutside);
   };
 
@@ -60,14 +63,14 @@ const Card: React.FC<Props> = ({ user }: Props) => {
     console.log(myIdentifier + " left the screen");
     //NOTE - What happens with the card after it has left the screen
   };
-  // const MyComponent = user?.userPicture;
+
   //TODO - after all cards have been swiped there should be either a message or a refetch of all cards
 
   return (
     <>
       <TinderCard
         key={user._id}
-        className="absolute h-10 pressable "
+        className=" absolute h-10 pressable"
         onSwipe={onSwipe}
         flickOnSwipe={true}
         onCardLeftScreen={() => onCardLeftScreen("Card")}
@@ -79,16 +82,13 @@ const Card: React.FC<Props> = ({ user }: Props) => {
             backgroundImage: user.userPicture
               ? `url(${user.userPicture})`
               : "url(https://placehold.jp/250x250.png)",
-          }}
-
-          // style={{
-          //   background: "none",
-          //   backgroundColor: "blue",
-          // }}
-        >
-          <button onClick={openModal}>
+          }}>
+          <button
+            // onClick={() => setShowMore(!showMore)}
+            onClick={openModal}>
             <InformationCircleIcon className="h-10 w-10 text-black-100 text-black" />
           </button>
+          {/* Load on demand, only when/if the condition is met */}
 
           <div>
             <h3 className="absolute  text-black"></h3>
@@ -98,12 +98,20 @@ const Card: React.FC<Props> = ({ user }: Props) => {
           </h3>
         </div>
       </TinderCard>
-      <UserModal
+      {/* <UserModal
         user={user}
-        isModalOpen={isModalOpen}
-        setIsModalOpen={setIsModalOpen}
+        showMore={showMore}
+        setShowMore={setShowMore}
         closeModalOnClickOutside={closeModalOnClickOutside}
-      />
+      /> */}
+      {showMore && (
+        <UserModalComponent
+          user={user}
+          showMore={showMore}
+          setShowMore={setShowMore}
+          closeModalOnClickOutside={closeModalOnClickOutside}
+        />
+      )}
     </>
   );
 };

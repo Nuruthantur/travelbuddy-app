@@ -5,15 +5,15 @@ import UserImage from "./UserImage";
 
 type Props = {
   user: User;
-  isModalOpen: boolean;
-  setIsModalOpen: React.Dispatch<SetStateAction<boolean>>;
+  showMore: boolean;
+  setShowMore: React.Dispatch<SetStateAction<boolean>>;
   closeModalOnClickOutside: () => void;
 };
 
 const UserModal: React.FC<Props> = ({
   user,
-  isModalOpen,
-  setIsModalOpen,
+  showMore,
+  setShowMore,
   closeModalOnClickOutside,
 }) => {
   //   const closeModalOnClickOutside = (event: MouseEvent) => {
@@ -22,10 +22,10 @@ const UserModal: React.FC<Props> = ({
 
   const closeModal = () => {
     console.log("button has been clicked!");
-    setIsModalOpen(false);
+    setShowMore(false);
     document.removeEventListener("click", closeModalOnClickOutside);
   };
-  if (!isModalOpen) {
+  if (!showMore) {
     return null;
   }
 
