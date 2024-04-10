@@ -83,12 +83,12 @@ const Card: React.FC<Props> = ({ user }: Props) => {
               ? `url(${user.userPicture})`
               : "url(https://placehold.jp/250x250.png)",
           }}>
+          {/* //TODO - on second button click the model closes (because of closeModalOnClickOutside) but is not clickable anymore afterwards */}
           <button
-            // onClick={() => setShowMore(!showMore)}
+            className="h-10 w-10 text-black-100 text-black"
             onClick={openModal}>
-            <InformationCircleIcon className="h-10 w-10 text-black-100 text-black" />
+            ℹ️
           </button>
-          {/* Load on demand, only when/if the condition is met */}
 
           <div>
             <h3 className="absolute  text-black"></h3>

@@ -21,7 +21,7 @@ const UserModal: React.FC<Props> = ({
   //   };
 
   const closeModal = () => {
-    console.log("button has been clicked!");
+    // console.log("button has been clicked!");
     setShowMore(false);
     document.removeEventListener("click", closeModalOnClickOutside);
   };
