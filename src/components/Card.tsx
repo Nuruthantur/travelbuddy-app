@@ -4,10 +4,9 @@ import "./Cards.css";
 import User from "@/@types/User";
 import pushIdToLikesArray from "@/utils/pushIdToLikesArray";
 import { useSession } from "next-auth/react";
-import { InformationCircleIcon } from "@heroicons/react/24/solid";
 import { useState } from "react";
-// import UserModal from "./UserModal";
 import dynamic from "next/dynamic";
+import UserImage from "./UserImage";
 
 type Props = {
   user: User;
@@ -70,7 +69,7 @@ const Card: React.FC<Props> = ({ user }: Props) => {
     <>
       <TinderCard
         key={user._id}
-        className=" absolute h-10 pressable"
+        className=" absolute h-10"
         onSwipe={onSwipe}
         flickOnSwipe={true}
         onCardLeftScreen={() => onCardLeftScreen("Card")}
@@ -78,18 +77,20 @@ const Card: React.FC<Props> = ({ user }: Props) => {
         <div
           className="flex flex-col relative w-[600px] max-w-[85vw] h-[50vh] bg-cover bg-center p-5 rounded-[20px] text-white;
 "
-          style={{
-            backgroundImage: user.userPicture
-              ? `url(${user.userPicture})`
-              : "url(https://placehold.jp/250x250.png)",
-          }}>
+          style={{ background: "white" }}
+          // style={{
+          //   backgroundImage: user.userPicture
+          //     ? `url(${user.userPicture})`
+          //     : "url(https://placehold.jp/250x250.png)",
+          // }}
+        >
           {/* //TODO - on second button click the model closes (because of closeModalOnClickOutside) but is not clickable anymore afterwards */}
           <button
-            className="h-10 w-10 text-black-100 text-black"
+            className="h-10 w-10 text-black-100 text-black pressable"
             onClick={openModal}>
             ℹ️
           </button>
-
+          <UserImage user={user} />
           <div>
             <h3 className="absolute  text-black"></h3>
           </div>
