@@ -1,4 +1,4 @@
-import UpdateProfileCC from "./UpdateProfileCC";
+import ProfileCC from "./ProfileCC";
 
 import dbConnect from "@/utils/dbConnect";
 import UserModel from "@/models/User";
@@ -20,5 +20,5 @@ export default async function UpdateProfileSC() {
   }
   console.log("data from:>> ", data);
 
-  return <UpdateProfileCC data={JSON.parse(JSON.stringify(data))} />;
+  return <ProfileCC data={JSON.parse(JSON.stringify(data))} />;
 }

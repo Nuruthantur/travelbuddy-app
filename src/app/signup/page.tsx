@@ -80,8 +80,6 @@ export default function Signup() {
   return (
     sessionStatus !== "authenticated" && (
       <>
-        <ToggleMode />
-
         <div className="flex items-center">
           <Image
             src={image}

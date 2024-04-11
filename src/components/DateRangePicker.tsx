@@ -23,7 +23,7 @@ const DateRangePicker = ({ handleChange, defaultDates }: Props) => {
   };
 
   return (
-    <div>
+    <div className="datePicker">
       <Datepicker useRange={false} value={value} onChange={handleValueChange} />
     </div>
   );

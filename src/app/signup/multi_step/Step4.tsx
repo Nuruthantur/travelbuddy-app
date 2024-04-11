@@ -1,7 +1,7 @@
 import DateRangePicker from "@/components/DateRangePicker";
 import React from "react";
 
-function StepC({
+function Step4({
   formData,
   handleChangeInput,
   handlePrevStep,
@@ -16,7 +16,7 @@ function StepC({
 }) {
   return (
     <div>
-      <h1 className="m-2 pt-4 text-xl font-bold text-blue-900 text-center">
+      <h1 className="m-2 pt-4 text-xl font-bold text-white font-outline-4 text-center">
         ADDITIONAL INFORMATION
       </h1>
       <div className="m-2 mt-4 text-black text-lg">
@@ -36,24 +36,6 @@ function StepC({
             />
           </div>
         </div>
-        {/* <label>Traveling Dates</label>
-
-        <input
-          type="date"
-          name="travelingDates"
-          value={formData.travelingDates}
-          onChange={(e) => handleChangeInput(e)}
-          className="w-full mb-3 mr-1 outline-none bg-white border border-grey-400 px-2 py-1 rounded-lg focus:border-blue-600"
-        />
-        <label>Traveling Dates</label> */}
-        {/* <DateRangePicker
-        value={{ value: formData.travelingDates }}
-        onChange={(dates: any) =>
-          handleChangeInput({
-            target: { name: "travelingDates", value: dates },
-          })
-        }
-      /> */}
 
         <label>Traveling Destinations</label>
         <input
@@ -98,4 +80,4 @@ function StepC({
   );
 }
 
-export default StepC;
+export default Step4;

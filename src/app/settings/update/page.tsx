@@ -1,6 +1,6 @@
 import React from "react";
-import UpdateProfileCC from "../../../components/UpdateProfileSC";
+import UpdateProfileSC from "../../../components/UpdateProfileSC";
 
 export default function UpdateProfile() {
-  return <UpdateProfileCC />;
+  return <UpdateProfileSC />;
 }

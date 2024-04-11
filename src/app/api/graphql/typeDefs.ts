@@ -48,7 +48,7 @@ const typeDefs = `#graphql
   
   type DeleteUser {
     message: String!
-    user: User
+   
   }
   
 
@@ -66,15 +66,16 @@ const typeDefs = `#graphql
 
   input UpdateUserInformation {
 
-    email: String!
-    userName: String!
+    userName: String
+    email: String
     firstName: String
     lastName: String
     birthDate: String
+    hobbies: String
     travelingDates: String
     travelingDestinations: String
-    hobbies: String
     aboutYourself: String
+    userPicture: String
     
 
 

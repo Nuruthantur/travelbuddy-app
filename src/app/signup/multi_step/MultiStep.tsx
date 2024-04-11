@@ -1,11 +1,11 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import StepA from "./StepA";
-import StepB from "./StepB";
-import StepC from "./StepC";
-import StepD from "./StepD";
-import StepE from "./StepE";
+import Step1 from "./Step1";
+import Step2 from "./Step2";
+import Step3 from "./Step3";
+import Step4 from "./Step4";
+import Step5 from "./Step5";
 import User from "@/@types/User";
 
 export interface newUserValues {
@@ -132,14 +132,14 @@ const MultiStep = ({
     <div className="mt-6">
       {renderTopStepNumbers()}
       {step === "1" ? (
-        <StepA
+        <Step1
           formData={formData}
           handleChangeInput={handleChangeInput}
           handleNextStep={handleNextStep}
         />
       ) : null}
       {step === "2" ? (
-        <StepB
+        <Step2
           formData={formData}
           handleChangeInput={handleChangeInput}
           handlePrevStep={handlePrevStep}
@@ -147,7 +147,7 @@ const MultiStep = ({
         />
       ) : null}
       {step === "3" ? (
-        <StepC
+        <Step3
           formData={formData}
           handleChangeInput={handleChangeInput}
           handlePrevStep={handlePrevStep}
@@ -155,7 +155,7 @@ const MultiStep = ({
         />
       ) : null}
       {step === "4" ? (
-        <StepD
+        <Step4
           formData={formData}
           handleChangeInput={handleChangeInput}
           handlePrevStep={handlePrevStep}
@@ -164,13 +164,19 @@ const MultiStep = ({
         />
       ) : null}
       {step === "5" ? (
-        <StepE
+        <Step5
           formData={formData}
           handleChangeInput={handleChangeInput}
           handlePrevStep={handlePrevStep}
           handleSubmitFormData={handleSubmitFormData}
         />
       ) : null}
+      <p className="mt-6 text-center text-sm text-gray-500">
+        Already have an account?{" "}
+        <a href="/login" className="font-semibold leading-6 text-slate-950 ">
+          <b>Log In</b>
+        </a>
+      </p>
     </div>
   );
 };

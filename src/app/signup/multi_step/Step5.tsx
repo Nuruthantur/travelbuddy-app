@@ -1,6 +1,6 @@
 import React from "react";
 
-function StepD({
+function Step5({
   formData,
   handleChangeInput,
   handlePrevStep,
@@ -13,7 +13,7 @@ function StepD({
 }) {
   return (
     <div>
-      <h1 className="m-2 pt-4 text-xl font-bold text-blue-900 text-center">
+      <h1 className="m-2 pt-4 text-xl font-bold text-white font-outline-4 text-center">
         CONFIRM INFORMATION
       </h1>
       <div className="m-2 mt-4">
@@ -58,7 +58,7 @@ function StepD({
   );
 }
 
-export default StepD;
+export default Step5;
 
 const DataConfirm = ({ label, value }: { label: any; value: any }) => {
   return (

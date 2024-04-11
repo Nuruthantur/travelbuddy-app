@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import image from "../../img/background.png";
-import { useRouter } from "next/navigation";
+import { redirect, useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 
 import { signIn, useSession } from "next-auth/react";
@@ -16,7 +16,7 @@ const Login = () => {
   console.log("session session login :>> ", session, sessionStatus);
   useEffect(() => {
     if (sessionStatus === "authenticated") {
-      router.replace("/");
+      router.replace("/dashboard");
     }
   }, [sessionStatus, router]);
 
@@ -25,6 +25,9 @@ const Login = () => {
     return emailRegex.test(email);
   };
 
+  const handleClick = () => {
+    redirect("/dashboard");
+  };
   const handleSubmit = async (e: any) => {
     e.preventDefault();
     const email = e.target[0].value;
@@ -48,6 +51,7 @@ const Login = () => {
 
     if (res?.error) {
       setError("Invalid email or password");
+      alert("Invalid email or password");
       if (res?.url) router.replace("/dashboard");
     } else {
       setError("");
@@ -137,6 +141,7 @@ const Login = () => {
               <div>
                 <button
                   type="submit"
+                  onClick={handleClick}
                   className="flex w-full justify-center rounded-md bg-slate-950 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm  focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
                 >
                   Sign in

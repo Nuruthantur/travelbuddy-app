@@ -1,55 +1,38 @@
 import Image from "next/image";
 import image from "../img/background.png";
-import Login from "./login/page";
 import Link from "next/link";
-import ToggleMode from "@/components/ToggleMode";
 
 export default function Home() {
   return (
-    <div className="text-black ">
-      <div className="flex items-center	">
-        <Image src={image} alt="" />
-      </div>
-      <div className="main_h1 flex justify-center">
-        <h1
-          style={{
-            fontSize: "50px",
-            marginTop: "-40px",
-            color: "white",
-          }}
-        >
-          Travel Buddy
-        </h1>
-      </div>
-      <div className="flex items-center justify-center">
-        <div className="m-auto">
-          <div className="flex justify-start">
-            <h4
-              style={{
-                marginLeft: "10px",
-                fontSize: "30px",
-                fontWeight: "bold",
-              }}
-            >
-              connecting people
-            </h4>
-          </div>
-          <div className="flex justify-end">
-            <h4
-              style={{
-                marginRight: "10px",
-                fontSize: "30px",
-                fontWeight: "bold",
-              }}
-            >
-              around the world...
-            </h4>
-          </div>
+    <div className="text-black h-screen flex flex-col justify-between">
+      <div className="mt-3">
+        <div className="flex items-center	">
+          <Image src={image} alt="" priority />
+        </div>
+        <div className="main_h1 flex justify-center">
+          <h1
+            style={{
+              fontSize: "50px",
+              marginTop: "-40px",
+              color: "white",
+            }}
+          >
+            Travel Buddy
+          </h1>
         </div>
       </div>
 
-      <div className="flex static">
-        <div className="flex justify-center absolute bottom-0">
+      <div className="flex flex-col">
+        <div className="flex items-start">
+          <h4 className="left">connecting people</h4>
+        </div>
+        <div className="flex items-end justify-end">
+          <h4 className="right">around the world...</h4>
+        </div>
+      </div>
+
+      <div className="flex justify-center">
+        <div className="flex">
           <Link
             href="/login"
             type="button"

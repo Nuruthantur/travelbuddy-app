@@ -104,7 +104,7 @@ const resolvers = {
             aboutYourSelf: params.input.aboutYourSelf,
             travelingDates: params.input.travelingDates,
             travelingDestinations: params.input.travelingDestinations,
-
+            userPicture: params.input.userPicture,
           },
         },
         { new: true }

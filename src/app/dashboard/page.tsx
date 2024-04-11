@@ -6,7 +6,6 @@ import Card from "@/components/Card";
 import User from "@/@types/User";
 import UserModel from "@/models/User";
 import Navbar from "@/components/Navbar";
-import ToggleMode from "@/components/ToggleMode";
 
 const Dashboard = async () => {
   const session = await getServerSession(); //in server component
@@ -37,15 +36,18 @@ const Dashboard = async () => {
   ]);
 
   return (
-    <div>
-      <div className="flex justify-center my-3">
-        <h1>Cards</h1>
+    <>
+      <div>
+        <div className="flex justify-center my-3">
+          <h1>Cards</h1>
 
-        {users.map((user: User) => (
-          <Card key={user.email} user={JSON.parse(JSON.stringify(user))} />
-        ))}
+          {users.map((user: User) => (
+            <Card key={user.email} user={JSON.parse(JSON.stringify(user))} />
+          ))}
+        </div>
       </div>
-    </div>
+      <Navbar />
+    </>
   );
 };
 
