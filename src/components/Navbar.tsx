@@ -12,7 +12,7 @@ function Navbar() {
           </Link>
         </div>
       </button>
-      <button className="bg-white text-pink-600">
+      <button className="bg-white text-pink-600 border-l border-gray-400">
         <div className="flex gap-10">
           <Link href="/likes">
             <CiHeart />
@@ -21,14 +21,14 @@ function Navbar() {
       </button>
       <button className="bg-white text-black border-l border-gray-400">
         <div className="flex gap-10">
-          <Link href="/settings/profile">
+          <Link href="/settings?view=profile">
             <CiUser />
           </Link>
         </div>
       </button>
-      <button className="bg-white text-black">
+      <button className="bg-white text-black border-l border-gray-400">
         <div className="flex gap-10">
-          <Link href="/settings">
+          <Link href="/settings?view=settings">
             <CiSettings />
           </Link>
         </div>

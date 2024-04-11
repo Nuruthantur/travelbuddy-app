@@ -92,7 +92,7 @@ function UpdateProfileCC({ data }: { data: any }) {
                   htmlFor="file-upload"
                   className="relative p-2 cursor-pointer rounded-xl bg-white font-semibold text-black focus-within:outline-none focus-within:ring-2 focus-within:ring-indigo-600 focus-within:ring-offset-2"
                 >
-                  <Link href={"/settings/update"}>
+                  <Link href={"/settings?view=update"}>
                     <span className="m-3">Update Profile</span>
                   </Link>
                 </label>

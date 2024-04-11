@@ -162,8 +162,11 @@ const resolvers = {
       }
     },
     deleteUser: async (_: undefined, params: any, context: any) => {
+      console.log("params :>> ", params);
       await dbConnect();
-      const deletedUser = await UserModel.findOneAndDelete(params.email);
+      const deletedUser = await UserModel.findOneAndDelete({
+        email: params.email,
+      });
       return { message: `User ${deletedUser?.email} has been removed` };
       // return deletedUser;
       // search for messages of this user and delete them

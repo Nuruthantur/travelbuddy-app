@@ -7,6 +7,7 @@ import { signOut, useSession } from "next-auth/react";
 import Link from "next/link";
 import { redirect } from "next/navigation";
 import Navbar from "./Navbar";
+import Loading from "./Loading";
 
 const DELETE_USER = gql`
   mutation DeleteUser($email: String!) {
@@ -29,24 +30,29 @@ function page({ data }: { data: any }) {
     hobbies: data.hobbies,
     aboutYourself: data.aboutYourself,
   });
-  console.log("data set :>> ", data);
+  // console.log("data set :>> ", data);
   const session = useSession();
-  console.log("session:>> ", session);
+  // console.log("session:>> ", session);
   const email = session?.data?.user?.email;
-  console.log("email yyyy:>> ", email);
+  // console.log("email yyyy:>> ", email);
   const handleLogOut = () => {
     signOut();
     redirect("/login");
   };
-  const [deletedUser] = useMutation(DELETE_USER);
+  const [deletedUser, { loading }] = useMutation(DELETE_USER);
   const handleDeleteUser = () => {
     deletedUser({
       variables: {
         email: email,
       },
     });
+    signOut();
     redirect("/login");
   };
+  if (loading === true) {
+    return <Loading />;
+  }
+
   return (
     <>
       <div>
@@ -74,7 +80,7 @@ function page({ data }: { data: any }) {
                 className="relative p-2 cursor-pointer rounded-xl bg-white font-semibold text-black focus-within:outline-none focus-within:ring-2 focus-within:ring-indigo-600 focus-within:ring-offset-2"
               >
                 {data.userName && data.lastName ? (
-                  <Link href="/settings/update">
+                  <Link href="/settings?view=update">
                     <span className="m-3 text-base">
                       {data.firstName} {data.lastName}
                     </span>

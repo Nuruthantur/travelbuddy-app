@@ -7,6 +7,7 @@ import Step3 from "./Step3";
 import Step4 from "./Step4";
 import Step5 from "./Step5";
 import User from "@/@types/User";
+import Loading from "@/components/Loading";
 
 export interface newUserValues {
   email: string;
@@ -60,6 +61,7 @@ const MultiStep = ({
 }) => {
   const [step, setStep] = useState("1");
   const [formData, setFormData] = useState(initialFormData);
+  const [loading, setLoading] = useState(false);
 
   const handleNextStep = () => {
     if (step === "1") setStep("2");
@@ -94,11 +96,13 @@ const MultiStep = ({
       travelingDates: newDate,
     });
   };
-  const handleSubmitFormData = () => {
+  const handleSubmitFormData = async () => {
     if (!formData.agreeToTerms) {
       alert("You must agree to the terms and conditions");
     } else {
-      handleSubmit(formData);
+      setLoading(true);
+      await handleSubmit(formData);
+      setLoading(false);
     }
   };
 
@@ -127,6 +131,10 @@ const MultiStep = ({
   useEffect(() => {
     // console.log(formData);
   }, [formData]);
+
+  if (loading === true) {
+    return <Loading />;
+  }
 
   return (
     <div className="mt-6">

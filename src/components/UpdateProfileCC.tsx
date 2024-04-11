@@ -1,15 +1,15 @@
 "use client";
 
 import React, { ChangeEvent, ReactNode, useEffect, useState } from "react";
-import Image from "next/image";
-import image from "../img/full-background.png";
+
 import { UserCircleIcon } from "@heroicons/react/24/solid";
 import DateRangePicker from "./DateRangePicker";
 import { useSession } from "next-auth/react";
 import { gql, useMutation } from "@apollo/client";
-import { redirect } from "next/navigation";
 import Navbar from "./Navbar";
 import getBase64 from "@/utils/imagetobase64";
+import RevalidateSettings from "@/app/server_actions/revalidate";
+import Loading from "./Loading";
 
 // type Props = {
 //   handleSubmit: any;
@@ -39,7 +39,7 @@ function UpdateProfileCC({ data }: { data: any }) {
   const session = useSession();
   console.log("session update :>> ", session);
   const loggedInEmail = session?.data?.user?.email;
-  const [updateUser] = useMutation(UPDATE_USER_INFORMATION);
+  const [updateUser, { loading }] = useMutation(UPDATE_USER_INFORMATION);
 
   const [inputValues, setInputValues] = useState({
     email: data.email,
@@ -81,6 +81,7 @@ function UpdateProfileCC({ data }: { data: any }) {
       inputs.forEach((input) => {
         input.value = "";
       });
+      RevalidateSettings();
     } catch (error) {
       console.error("Error updating user information:", error);
     }
@@ -125,6 +126,9 @@ function UpdateProfileCC({ data }: { data: any }) {
       });
     }
   };
+  if (loading === true) {
+    return <Loading />;
+  }
 
   return (
     <>
